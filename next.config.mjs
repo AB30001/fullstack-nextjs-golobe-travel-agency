@@ -5,6 +5,7 @@ const cspHeader = `
     style-src 'self' 'unsafe-inline';
     img-src 'self' blob: data: https://images.unsplash.com/ https://images.pexels.com/ https://platform-lookaside.fbsbx.com/;
     font-src 'self';
+    connect-src 'self';
     object-src 'self';
     frame-src 'self' https://www.openstreetmap.org/ https://js.stripe.com;
     base-uri 'self';
