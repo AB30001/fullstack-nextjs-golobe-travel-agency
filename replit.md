@@ -2,15 +2,22 @@
 
 Nordic Experiences is a TripAdvisor-style platform showcasing tours and experiences across the Nordic countries (Norway, Iceland, Sweden, Finland, and Denmark). The application is built with Next.js 14 and focuses on browsing, reviewing, and discovering amazing adventures in Scandinavia through affiliate partnerships.
 
-The platform provides a streamlined browsing experience with no user accounts, no payments, and no direct booking. Users can explore experiences, read reviews, filter by location and category, and click through to affiliate partners to complete their bookings.
+The platform provides a streamlined browsing experience focused on affiliate-based bookings. Users can explore experiences, read reviews, filter by location and category, and click through to affiliate partners to complete their bookings. Authentication and payment systems are preserved in the codebase for potential future use but are not currently active.
 
 # Recent Changes
 
+**October 8, 2025 - Comprehensive Flight/Hotel Cleanup**
+- Completed full removal of all flight and hotel functionality from codebase
+- Removed all flight/hotel pages, components, services, actions, and API routes
+- Deleted flight/hotel schemas (flights, hotels, bookings, passengers, searchHistory, promoCodes)
+- Removed flight/hotel data files, images, and assets (airlines data, airplane data, flight/hotel images)
+- Cleaned up Redux store by removing flight/hotel slices
+- Fixed all import dependencies and broken references throughout codebase
+- Platform successfully tested and confirmed working
+- **Preserved** authentication (NextAuth) and payment (Stripe) infrastructure for potential future use
+
 **October 8, 2025 - Complete Platform Transformation**
 - Transformed from flight/hotel booking platform to Nordic experiences review platform
-- Removed all authentication systems (NextAuth, user accounts, sessions)
-- Removed all payment processing (Stripe integration)
-- Removed all booking functionality (flights, hotels, reservations)
 - Created new database schema for experiences and reviews
 - Built new TripAdvisor-style homepage with hero search
 - Created experiences listing and detail pages
@@ -37,7 +44,7 @@ Preferred communication style: Simple, everyday language.
 - Next.js 14 with App Router for server-side rendering and static generation
 - React 18 with Server Components for optimal performance
 - Client-side state for filters and search
-- No authentication or user-specific state management
+- Minimal Redux for app state management
 
 **UI Component System**
 - Radix UI primitives for accessible components
@@ -56,7 +63,7 @@ Preferred communication style: Simple, everyday language.
 **API Layer**
 - Next.js API Routes for serverless functions
 - RESTful endpoints for data retrieval
-- No authentication middleware
+- Authentication infrastructure preserved (NextAuth) for future use
 - Data generation endpoints for sample content
 
 **Data Access Layer**
