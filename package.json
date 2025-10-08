@@ -6,9 +6,9 @@
     "defaults"
   ],
   "scripts": {
-    "dev": "cross-env TZ=UTC next dev",
+    "dev": "cross-env TZ=UTC next dev -p 5000 -H 0.0.0.0",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 5000 -H 0.0.0.0",
     "setup": "node setup.js",
     "lint": "next lint",
     "test": "vitest --testNamePattern Testing"
