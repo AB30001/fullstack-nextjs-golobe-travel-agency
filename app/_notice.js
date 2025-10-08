@@ -9,15 +9,7 @@ export function Notice() {
     <div className="bg-secondary p-2 text-center text-[0.75rem] font-semibold text-secondary text-white">
       <div ref={ref} className="line-clamp-2">
         This website is still in development. Some functionalities may not be
-        available or don&apos;t work properly. Head to this{" "}
-        <a
-          className="font-bold text-tertiary underline"
-          href="https://github.com/mojahidhasan/golob-travel-agency-nextjs?tab=readme-ov-file#todo"
-          target="_blank"
-        >
-          GitHub repository
-        </a>{" "}
-        to see which functionalities are yet to develop.
+        available or don&apos;t work properly.
       </div>
       <button
         className="text-primary underline underline-offset-4 min-[583px]:hidden"

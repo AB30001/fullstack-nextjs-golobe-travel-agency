@@ -58,10 +58,10 @@ If you're familiar with Next.js projects, here's the quick setup:
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/mojahidhasan/fullstack-nextjs-golobe-travel-agency.git
+git clone <your-repository-url>
 
 # 2. Navigate to project directory
-cd fullstack-nextjs-golobe-travel-agency
+cd <your-project-directory>
 
 # 3. Install dependencies
 npm install
@@ -85,8 +85,8 @@ curl -X POST http://localhost:3000/api/generate/website_config -H "Authorization
 ### Step 1: Clone the Repository
 
 ```bash
-git clone https://github.com/mojahidhasan/fullstack-nextjs-golobe-travel-agency.git
-cd fullstack-nextjs-golobe-travel-agency
+git clone <your-repository-url>
+cd <your-project-directory>
 ```
 
 ### Step 2: Install Dependencies
@@ -580,12 +580,9 @@ fullstack-nextjs-golobe-travel-agency/
 If you encounter any issues:
 
 1. Check the [Troubleshooting](#troubleshooting) section
-2. Search existing [GitHub Issues](https://github.com/mojahidhasan/fullstack-nextjs-golobe-travel-agency/issues)
-3. Create a new issue with detailed information
-4. Join the community discussions
+2. Review project documentation
+3. Check online resources and documentation
 
 ---
 
 **Happy Coding! 🚀**
-
-If you find this guide helpful, please consider giving the project a ⭐ on GitHub!
