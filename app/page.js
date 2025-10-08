@@ -1,64 +1,191 @@
-import { Nav } from "@/components/sections/Nav";
-import { SearchFlightsAndStaysFormShortcut } from "@/components/pages/home/sections/SearchFlightsAndStaysFormShortcut";
-import { FindFlightAndHotelcards } from "@/components/pages/home/sections/FindFlightAndHotelCards";
-import { Reviews } from "@/components/pages/home/sections/Reviews";
-import { Footer } from "@/components/sections/Footer";
 import Image from "next/image";
+import Link from "next/link";
+import { SearchBar } from "@/components/experiences/SearchBar";
+import { CountryCard } from "@/components/experiences/CountryCard";
+import { ExperienceCard } from "@/components/experiences/ExperienceCard";
+import { getFeaturedExperiences, getTopRatedExperiences } from "@/lib/services/experiences";
+import { Footer } from "@/components/sections/Footer";
 
-import { auth } from "@/lib/auth";
-import { FlightDestinations } from "@/components/pages/flights/sections/FlightDestinations";
-import { PopularHotelDestinations } from "@/components/pages/hotels/sections/PopularHotelDestinations";
+export const metadata = {
+  title: "Nordic Experiences | Tours & Adventures in Scandinavia",
+  description:
+    "Discover amazing tours and experiences in Norway, Iceland, Sweden, Finland, and Denmark. Find Northern Lights tours, fjord cruises, wildlife safaris, and more.",
+  keywords: [
+    "Nordic tours",
+    "Scandinavia experiences",
+    "Northern Lights",
+    "Norway tours",
+    "Iceland tours",
+    "Sweden tours",
+    "Finland tours",
+    "Denmark tours",
+  ],
+};
+
+const NORDIC_COUNTRIES = [
+  {
+    name: "Norway",
+    slug: "norway",
+    image: "https://images.unsplash.com/photo-1601439678777-b2b3c56fa627",
+    description: "Fjords, Northern Lights & Mountains",
+  },
+  {
+    name: "Iceland",
+    slug: "iceland",
+    image: "https://images.unsplash.com/photo-1504829857797-ddff29c27927",
+    description: "Glaciers, Volcanoes & Hot Springs",
+  },
+  {
+    name: "Sweden",
+    slug: "sweden",
+    image: "https://images.unsplash.com/photo-1509356843151-3e7d96241e11",
+    description: "Archipelagos, Culture & Nature",
+  },
+  {
+    name: "Finland",
+    slug: "finland",
+    image: "https://images.unsplash.com/photo-1517841905240-472988babdf9",
+    description: "Lapland, Saunas & Northern Lights",
+  },
+  {
+    name: "Denmark",
+    slug: "denmark",
+    image: "https://images.unsplash.com/photo-1513622470522-26c3c8a854bc",
+    description: "Copenhagen, Castles & Coastal Beauty",
+  },
+];
 
 export default async function HomePage() {
-  const session = await auth();
+  const topRated = await getTopRatedExperiences(8);
+  const featured = await getFeaturedExperiences();
 
   return (
     <>
-      <header className="relative mb-20">
-        <Nav
-          type="home"
-          className={"absolute left-0 top-0 z-10"}
-          session={session}
+      {/* Hero Section */}
+      <header className="relative mb-16 h-[600px] bg-gray-900">
+        <Image
+          src="https://images.unsplash.com/photo-1536514072410-5019a3c69182"
+          alt="Nordic landscape"
+          fill
+          className="object-cover opacity-60"
+          priority
         />
-        <section
-          className={`relative flex h-[600px] w-full items-center bg-home-header`}
-        >
-          <Image
-            src={
-              "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?q=70&amp;w=870&amp;auto=format&amp;fit=crop&amp;ixlib=rb-4.0.3&amp;ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-            }
-            alt="home-header"
-            fill
-            sizes="(max-width: 640px) 50vw, 90vw"
-            className="-z-10 object-cover object-[center_40%]"
-            loading={"eager"}
-          />
-          <div className="w-full text-center text-white">
-            <h2 className="text-2xl font-bold leading-[5rem] md:text-[2rem] lg:text-[2.8125rem]">
-              Helping Others
-            </h2>
-            <h1 className="text-[3rem] font-bold uppercase md:text-[4rem] md:tracking-[.15em] lg:text-[5rem]">
-              Live & Travel
-            </h1>
-            <p className="text-[1rem] font-semibold lg:text-[1.25rem]">
-              Special offers to suit your plan
-            </p>
+        
+        <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-white">
+          <h1 className="mb-4 text-center text-5xl font-bold md:text-6xl lg:text-7xl">
+            Discover Nordic <br className="hidden md:block" />
+            Adventures
+          </h1>
+          <p className="mb-8 text-center text-xl md:text-2xl">
+            Explore unforgettable experiences across Scandinavia
+          </p>
+          
+          <div className="w-full max-w-3xl">
+            <SearchBar />
           </div>
-        </section>
-        <SearchFlightsAndStaysFormShortcut
-          className={
-            "relative left-1/2 top-full w-[90%] -translate-x-1/2 -translate-y-[20%] lg:-translate-y-[25%] xl:-translate-y-[30%]"
-          }
-        />
+        </div>
       </header>
 
-      <main className="mx-auto mb-10 w-[90%] space-y-10 md:mb-20 md:space-y-20">
-        <FlightDestinations />
-        <PopularHotelDestinations
-        />
-        <FindFlightAndHotelcards />
-        <Reviews />
+      <main className="mx-auto mb-16 w-[90%] max-w-7xl space-y-16">
+        {/* Browse by Country */}
+        <section>
+          <h2 className="mb-8 text-3xl font-bold">Explore by Country</h2>
+          <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-5">
+            {NORDIC_COUNTRIES.map((country) => (
+              <CountryCard key={country.slug} country={country} />
+            ))}
+          </div>
+        </section>
+
+        {/* Top Rated Experiences */}
+        <section>
+          <div className="mb-6 flex items-center justify-between">
+            <h2 className="text-3xl font-bold">Top-Rated Experiences</h2>
+            <Link
+              href="/experiences?rating=4"
+              className="text-blue-600 hover:underline"
+            >
+              View all →
+            </Link>
+          </div>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+            {topRated.map((experience) => (
+              <ExperienceCard key={experience._id} experience={experience} />
+            ))}
+          </div>
+        </section>
+
+        {/* Popular Categories */}
+        <section>
+          <h2 className="mb-8 text-3xl font-bold">Popular Categories</h2>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            <Link
+              href="/experiences?category=Northern Lights"
+              className="group relative h-48 overflow-hidden rounded-lg"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1483347756197-71ef80e95f73"
+                alt="Northern Lights"
+                fill
+                className="object-cover transition-transform group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="text-2xl font-bold">Northern Lights</h3>
+              </div>
+            </Link>
+
+            <Link
+              href="/experiences?category=Fjord Tours"
+              className="group relative h-48 overflow-hidden rounded-lg"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38"
+                alt="Fjord Tours"
+                fill
+                className="object-cover transition-transform group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="text-2xl font-bold">Fjord Tours</h3>
+              </div>
+            </Link>
+
+            <Link
+              href="/experiences?category=Wildlife Safari"
+              className="group relative h-48 overflow-hidden rounded-lg"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1551244073-f8f8e57d57ae"
+                alt="Wildlife Safari"
+                fill
+                className="object-cover transition-transform group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="text-2xl font-bold">Wildlife Safari</h3>
+              </div>
+            </Link>
+
+            <Link
+              href="/experiences?category=Cultural Tours"
+              className="group relative h-48 overflow-hidden rounded-lg"
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1575629280303-b8f78f1d6b54"
+                alt="Cultural Tours"
+                fill
+                className="object-cover transition-transform group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+              <div className="absolute bottom-4 left-4 text-white">
+                <h3 className="text-2xl font-bold">Cultural Tours</h3>
+              </div>
+            </Link>
+          </div>
+        </section>
       </main>
+
       <Footer />
     </>
   );
