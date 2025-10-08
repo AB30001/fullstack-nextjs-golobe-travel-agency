@@ -70,13 +70,14 @@ export default async function HomePage() {
           className="object-cover opacity-60"
           priority
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-black/60"></div>
         
         <div className="relative z-10 flex h-full flex-col items-center justify-center px-4 text-white">
-          <h1 className="mb-4 text-center text-5xl font-bold md:text-6xl lg:text-7xl">
+          <h1 className="mb-4 text-center text-5xl font-bold drop-shadow-lg md:text-6xl lg:text-7xl">
             Discover Nordic <br className="hidden md:block" />
             Adventures
           </h1>
-          <p className="mb-8 text-center text-xl md:text-2xl">
+          <p className="mb-8 text-center text-xl drop-shadow-md md:text-2xl">
             Explore unforgettable experiences across Scandinavia
           </p>
           

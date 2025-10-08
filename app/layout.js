@@ -30,31 +30,28 @@ const tradegothic = localFont({
 });
 
 export const metadata = {
-  title: "Golob Travel Agency",
+  title: "Nordic Experiences | Tours & Adventures in Scandinavia",
   description:
-    "Golob Travel Agency is a travel agency that provides top-notch travel services.",
+    "Discover amazing tours and experiences across Norway, Iceland, Sweden, Finland, and Denmark. Find Northern Lights tours, fjord cruises, wildlife safaris, and more.",
   keywords: [
-    "travel",
-    "agency",
-    "golob",
-    "travel agency",
-    "golob travel agency",
-    "nextjs",
-    "react",
-    "javascript",
-    "tailwind css",
-    "next auth",
-    "mongodb",
-    "node js",
-    "redux",
-    "web app",
+    "Nordic tours",
+    "Scandinavia experiences",
+    "Northern Lights",
+    "Norway tours",
+    "Iceland tours",
+    "Sweden tours",
+    "Finland tours",
+    "Denmark tours",
+    "fjord tours",
+    "wildlife safari",
+    "nordic adventures",
   ],
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000"),
   openGraph: {
-    title: "Golob Travel Agency",
+    title: "Nordic Experiences | Tours & Adventures in Scandinavia",
     description:
-      "Golob Travel Agency is a travel agency that provides top-notch travel services (fake, personal project).",
-    siteName: "Golob Travel Agency",
+      "Discover amazing tours and experiences across Norway, Iceland, Sweden, Finland, and Denmark.",
+    siteName: "Nordic Experiences",
     images: [
       {
         url: openGraph.src,
