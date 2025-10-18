@@ -1,8 +1,20 @@
 import { getExperienceBySlug, getExperienceReviews } from "@/lib/services/experiences";
 import { notFound } from "next/navigation";
-import Image from "next/image";
-import { Star, MapPin, Clock, Users, Calendar, ExternalLink } from "lucide-react";
+import { Star, MapPin, Clock, Users, Calendar } from "lucide-react";
 import { ReviewsList } from "@/components/experiences/ReviewsList";
+import { Breadcrumb } from "@/components/experiences/Breadcrumb";
+import { ExperienceTabs } from "@/components/experiences/ExperienceTabs";
+import { RatingBadge } from "@/components/experiences/RatingBadge";
+import { TravelersChoiceBadge } from "@/components/experiences/TravelersChoice";
+import { ShareSaveButtons } from "@/components/experiences/ShareSaveButtons";
+import { WhyTravelersLove } from "@/components/experiences/WhyTravelersLove";
+import { BookingSidebar } from "@/components/experiences/BookingSidebar";
+import { MeetingPickup } from "@/components/experiences/MeetingPickup";
+import { AdditionalInfo } from "@/components/experiences/AdditionalInfo";
+import { CancellationPolicy } from "@/components/experiences/CancellationPolicy";
+import { SimilarExperiences } from "@/components/experiences/SimilarExperiences";
+import { StickyMobileBar } from "@/components/experiences/StickyMobileBar";
+import { ImageGallery } from "@/components/experiences/ImageGallery";
 
 export async function generateMetadata({ params }) {
   const experience = await getExperienceBySlug(params.slug);
@@ -26,111 +38,49 @@ export default async function ExperienceDetailPage({ params }) {
     return notFound();
   }
 
-  const reviews = await getExperienceReviews(experience._id, { limit: 5 });
+  const reviews = await getExperienceReviews(experience._id, { limit: 10 });
+  const images = [experience.coverImage, ...experience.images];
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="mx-auto max-w-7xl px-4 py-8">
-        {/* Image Gallery */}
-        <div className="mb-8 grid gap-2 md:grid-cols-4">
-          <div className="relative h-[400px] md:col-span-3">
-            <Image
-              src={experience.coverImage}
-              alt={experience.title}
-              fill
-              className="rounded-lg object-cover"
-              sizes="75vw"
-              priority
-            />
+      <div className="mx-auto max-w-7xl px-4 py-6">
+        <Breadcrumb country={experience.country} city={experience.city} title={experience.title} />
+
+        <div className="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+          <div className="flex-1">
+            <h1 className="mb-4 text-3xl font-bold md:text-4xl">{experience.title}</h1>
+            <div className="flex flex-wrap items-center gap-4">
+              <RatingBadge
+                rating={experience.averageRating}
+                totalReviews={experience.totalReviews}
+              />
+              {experience.averageRating >= 4.5 && <TravelersChoiceBadge />}
+            </div>
           </div>
-          <div className="grid gap-2">
-            {experience.images.slice(0, 2).map((image, idx) => (
-              <div key={idx} className="relative h-[196px]">
-                <Image
-                  src={image}
-                  alt={`${experience.title} ${idx + 1}`}
-                  fill
-                  className="rounded-lg object-cover"
-                  sizes="25vw"
-                />
-              </div>
-            ))}
-          </div>
+          <ShareSaveButtons />
         </div>
 
-        <div className="grid gap-8 lg:grid-cols-3">
-          {/* Main Content */}
+        <ImageGallery images={images} title={experience.title} />
+
+        <ExperienceTabs activeTab="Overview" />
+
+        <div id="overview" className="mt-8 grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <div className="mb-4 flex items-center gap-2 text-gray-600">
-              <MapPin className="h-5 w-5" />
-              <span>
-                {experience.city}, {experience.country}
-              </span>
-            </div>
-
-            <h1 className="mb-4 text-3xl font-bold">{experience.title}</h1>
-
-            <div className="mb-6 flex items-center gap-4">
-              <div className="flex items-center gap-1">
-                <Star className="h-5 w-5 fill-yellow-400 text-yellow-400" />
-                <span className="text-lg font-semibold">
-                  {experience.averageRating.toFixed(1)}
-                </span>
-                <span className="text-gray-600">
-                  ({experience.totalReviews} reviews)
-                </span>
-              </div>
-              <span className="rounded bg-blue-100 px-3 py-1 text-sm font-medium text-blue-700">
-                {experience.category}
-              </span>
-            </div>
-
-            {/* Quick Info */}
-            <div className="mb-8 grid gap-4 rounded-lg bg-white p-6 shadow-md sm:grid-cols-3">
-              <div className="flex items-center gap-3">
-                <Clock className="h-5 w-5 text-gray-600" />
-                <div>
-                  <div className="text-sm text-gray-600">Duration</div>
-                  <div className="font-semibold">
-                    {experience.duration.value} {experience.duration.unit}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Users className="h-5 w-5 text-gray-600" />
-                <div>
-                  <div className="text-sm text-gray-600">Languages</div>
-                  <div className="font-semibold">
-                    {experience.languagesOffered?.join(", ") || "English"}
-                  </div>
-                </div>
-              </div>
-              <div className="flex items-center gap-3">
-                <Calendar className="h-5 w-5 text-gray-600" />
-                <div>
-                  <div className="text-sm text-gray-600">Availability</div>
-                  <div className="font-semibold">Check dates</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Description */}
             <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
-              <h2 className="mb-4 text-2xl font-bold">About this experience</h2>
+              <h2 className="mb-4 text-2xl font-bold">About</h2>
               <p className="mb-4 text-gray-700">{experience.description}</p>
               {experience.longDescription && (
                 <p className="text-gray-700">{experience.longDescription}</p>
               )}
             </div>
 
-            {/* Highlights */}
             {experience.highlights && experience.highlights.length > 0 && (
               <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
                 <h2 className="mb-4 text-2xl font-bold">Highlights</h2>
-                <ul className="space-y-2">
+                <ul className="space-y-3">
                   {experience.highlights.map((highlight, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-blue-600"></span>
+                    <li key={idx} className="flex items-start gap-3">
+                      <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-black"></span>
                       <span className="text-gray-700">{highlight}</span>
                     </li>
                   ))}
@@ -138,61 +88,149 @@ export default async function ExperienceDetailPage({ params }) {
               </div>
             )}
 
-            {/* What's Included */}
             {experience.included && experience.included.length > 0 && (
               <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
                 <h2 className="mb-4 text-2xl font-bold">What's included</h2>
                 <ul className="space-y-2">
                   {experience.included.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
+                    <li key={idx} className="flex items-start gap-3">
                       <span className="mt-1 text-green-600">✓</span>
                       <span className="text-gray-700">{item}</span>
                     </li>
                   ))}
                 </ul>
+                {experience.notIncluded && experience.notIncluded.length > 0 && (
+                  <>
+                    <h3 className="mb-2 mt-6 font-semibold">What's not included</h3>
+                    <ul className="space-y-2">
+                      {experience.notIncluded.map((item, idx) => (
+                        <li key={idx} className="flex items-start gap-3">
+                          <span className="mt-1 text-red-600">✗</span>
+                          <span className="text-gray-700">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
               </div>
             )}
 
-            {/* Reviews */}
-            <div className="rounded-lg bg-white p-6 shadow-md">
+            <WhyTravelersLove reviews={reviews} />
+
+            <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
+              <h2 className="mb-4 text-2xl font-bold">Quick info</h2>
+              <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+                <div className="flex items-start gap-3">
+                  <Clock className="mt-1 h-5 w-5 text-gray-600" />
+                  <div>
+                    <div className="font-semibold">Duration</div>
+                    <div className="text-sm text-gray-600">
+                      {experience.duration.value} {experience.duration.unit}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Users className="mt-1 h-5 w-5 text-gray-600" />
+                  <div>
+                    <div className="font-semibold">Languages</div>
+                    <div className="text-sm text-gray-600">
+                      {experience.languagesOffered?.join(", ") || "English"}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Calendar className="mt-1 h-5 w-5 text-gray-600" />
+                  <div>
+                    <div className="font-semibold">Mobile ticket</div>
+                    <div className="text-sm text-gray-600">Accepted</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="details">
+              <MeetingPickup experience={experience} />
+              <AdditionalInfo experience={experience} />
+              <CancellationPolicy />
+            </div>
+
+            <div id="itinerary" className="mb-8 rounded-lg bg-white p-6 shadow-md">
+              <h2 className="mb-4 text-2xl font-bold">What to expect</h2>
+              <p className="mb-4 text-gray-700">
+                Experience the best of {experience.country} with this carefully curated {experience.category.toLowerCase()} adventure. 
+                Your journey includes all the highlights mentioned above, with expert local guides ensuring an unforgettable experience.
+              </p>
+              <div className="space-y-4">
+                <div className="border-l-4 border-blue-600 bg-blue-50 p-4">
+                  <div className="font-semibold text-blue-900">Duration: {experience.duration.value} {experience.duration.unit}</div>
+                  <div className="mt-2 text-sm text-blue-800">
+                    This tour provides ample time to explore each location and capture amazing photos.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="operator" className="mb-8 rounded-lg bg-white p-6 shadow-md">
+              <h2 className="mb-4 text-2xl font-bold">About the operator</h2>
+              <p className="mb-4 text-gray-700">
+                This experience is provided by verified local tour operators in {experience.country}. 
+                All operators are carefully selected and meet high standards for safety, quality, and customer satisfaction.
+              </p>
+              <div className="space-y-3 text-sm">
+                <div className="flex items-start gap-3">
+                  <Star className="mt-1 h-5 w-5 fill-yellow-400 text-yellow-400" />
+                  <div>
+                    <span className="font-medium">Highly rated:</span> {experience.averageRating.toFixed(1)}/5.0 based on {experience.totalReviews} reviews
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <Users className="mt-1 h-5 w-5 text-gray-600" />
+                  <div>
+                    <span className="font-medium">Small group tours:</span> Maximum 19 travelers for a personal experience
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div id="reviews" className="mb-8 rounded-lg bg-white p-6 shadow-md">
               <h2 className="mb-4 text-2xl font-bold">Reviews</h2>
+              <div className="mb-6 flex items-center gap-4">
+                <div className="text-5xl font-bold">{experience.averageRating.toFixed(1)}</div>
+                <div>
+                  <div className="flex items-center gap-1">
+                    {[...Array(5)].map((_, idx) => (
+                      <Star
+                        key={idx}
+                        className={`h-5 w-5 ${
+                          idx < Math.round(experience.averageRating)
+                            ? "fill-black text-black"
+                            : "fill-gray-300 text-gray-300"
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    {experience.totalReviews.toLocaleString()} reviews
+                  </div>
+                </div>
+              </div>
               <ReviewsList reviews={reviews} experienceId={experience._id} />
             </div>
+
+            <SimilarExperiences
+              country={experience.country}
+              category={experience.category}
+              currentId={experience._id}
+            />
           </div>
 
-          {/* Booking Sidebar */}
           <div className="lg:col-span-1">
-            <div className="sticky top-4 rounded-lg bg-white p-6 shadow-lg">
-              <div className="mb-4">
-                <div className="text-sm text-gray-600">From</div>
-                <div className="text-3xl font-bold">${experience.priceFrom}</div>
-                <div className="text-sm text-gray-600">per person</div>
-              </div>
-
-              <a
-                href={experience.affiliateLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="mb-4 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
-              >
-                Check Availability
-                <ExternalLink className="h-4 w-4" />
-              </a>
-
-              <div className="mb-4 text-center text-xs text-gray-500">
-                Powered by {experience.affiliatePartner}
-              </div>
-
-              {experience.meetingPoint && (
-                <div className="border-t pt-4">
-                  <div className="mb-2 font-semibold">Meeting Point</div>
-                  <p className="text-sm text-gray-600">{experience.meetingPoint}</p>
-                </div>
-              )}
-            </div>
+            <BookingSidebar experience={experience} />
           </div>
         </div>
       </div>
+
+      <StickyMobileBar price={experience.priceFrom} affiliateLink={experience.affiliateLink} />
     </div>
   );
 }
