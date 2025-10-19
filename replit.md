@@ -6,6 +6,13 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
+**October 19, 2025 - Branding Update**
+- Replaced all instances of golobe-logo.png with nordtravel-logo.svg
+- Updated Logo component to use Next.js Image for SVG file loading
+- Applied new logo to navigation (Nav.js, NavNordic.js), footer (QuickLinks.js), and user forms layout
+- Removed legacy logo props (worldFill, otherFill) from all components
+- Deleted old golobe-logo.png file from project
+
 **October 8, 2025 - Comprehensive Flight/Hotel Cleanup**
 - Completed full removal of all flight and hotel functionality from codebase
 - Removed all flight/hotel pages, components, services, actions, and API routes

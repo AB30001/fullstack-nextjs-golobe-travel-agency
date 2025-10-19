@@ -73,11 +73,7 @@ export function QuickLinks() {
   return (
     <section className="relative z-10 mx-auto mb-[80px] flex w-[90%] gap-[40px] max-sm:flex-col sm:gap-[140px]">
       <div>
-        <Logo
-          className={"mb-[24px] block h-[40px] w-fit"}
-          worldFill={"white"}
-          otherFill={"black"}
-        />
+        <Logo className={"mb-[24px] block h-[40px] w-fit"} />
         <div className="flex gap-[12px] text-secondary">
           <Link
             aria-label={"Link to Facebook.com"}

@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 import { Search } from "lucide-react";
 
 export function NavNordic({ className, type = "default", ...props }) {
@@ -25,9 +26,14 @@ export function NavNordic({ className, type = "default", ...props }) {
     >
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2">
-        <span className={cn("text-2xl font-bold", types[type].logoText)}>
-          Nordic Experiences
-        </span>
+        <Image
+          src="/images/nordtravel-logo.svg"
+          alt="NordTravel"
+          width={140}
+          height={45}
+          className="h-[40px] w-auto"
+          priority
+        />
       </Link>
 
       {/* Navigation Links */}
