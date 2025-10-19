@@ -5,6 +5,7 @@ import { CountryCard } from "@/components/experiences/CountryCard";
 import { ExperienceCard } from "@/components/experiences/ExperienceCard";
 import { getFeaturedExperiences, getTopRatedExperiences } from "@/lib/services/experiences";
 import { Footer } from "@/components/sections/Footer";
+import { NavMinimal } from "@/components/sections/NavMinimal";
 
 export const metadata = {
   title: "Nordic Experiences | Tours & Adventures in Scandinavia",
@@ -63,6 +64,8 @@ export default async function HomePage() {
     <>
       {/* Hero Section */}
       <header className="relative mb-16 h-[600px] bg-gray-900">
+        <NavMinimal />
+        
         <Image
           src="https://images.unsplash.com/photo-1536514072410-5019a3c69182"
           alt="Nordic landscape"
