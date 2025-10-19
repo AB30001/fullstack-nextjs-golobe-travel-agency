@@ -6,6 +6,17 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
+**October 19, 2025 - Homepage Navigation Redesign**
+- Created new minimal navigation component (NavMinimal.js) for homepage
+- Navigation features: logo + 3 category links (Northern Lights, Fjord Tours, Wildlife Safari) + search button
+- Transparent overlay design with white text/logo on hero image
+- Responsive: category links hidden on mobile/tablet, visible on desktop (lg breakpoint)
+- Category links properly filter experiences using exact enum values from schema
+
+**October 19, 2025 - Logo Size Increase**
+- Increased logo size by 30% across all components (40px → 52px default height)
+- Updated Logo component, Nav, NavNordic, QuickLinks, and user forms layout
+
 **October 19, 2025 - Branding Update**
 - Replaced all instances of golobe-logo.png with nordtravel-logo.svg
 - Updated Logo component to use Next.js Image for SVG file loading
