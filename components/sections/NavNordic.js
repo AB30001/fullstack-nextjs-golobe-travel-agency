@@ -57,7 +57,7 @@ export function NavNordic({ className, type = "default", ...props }) {
           href="/experiences?category=Wildlife Safari"
           className="font-medium hover:text-blue-600"
         >
-          Wildlife
+          Whale Safari
         </Link>
         <Link
           href="/experiences"

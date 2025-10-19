@@ -6,12 +6,13 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
-**October 19, 2025 - Homepage Navigation Redesign**
-- Created new minimal navigation component (NavMinimal.js) for homepage
-- Navigation features: logo + 3 category links (Northern Lights, Fjord Tours, Wildlife Safari) + search button
-- Transparent overlay design with white text/logo on hero image
+**October 19, 2025 - Navigation Updates**
+- Updated all navigation components to display "Whale Safari" instead of "Wildlife" 
+- Redesigned homepage navigation (NavMinimal.js) with white background and shadow
+- Navigation features: logo + 4 category links (All Experiences, Northern Lights, Fjord Tours, Whale Safari) + Countries dropdown
+- Countries dropdown includes all 5 Nordic countries: Norway, Sweden, Iceland, Denmark, Finland
 - Responsive: category links hidden on mobile/tablet, visible on desktop (lg breakpoint)
-- Category links properly filter experiences using exact enum values from schema
+- Category links and country filters properly filter experiences using exact enum values from schema
 
 **October 19, 2025 - Logo Size Increase**
 - Increased logo size by 30% across all components (40px → 52px default height)

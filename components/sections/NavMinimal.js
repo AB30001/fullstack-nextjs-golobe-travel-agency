@@ -61,7 +61,7 @@ export function NavMinimal() {
           href="/experiences?category=Wildlife Safari"
           className="hidden font-medium text-gray-900 transition-colors hover:text-blue-600 lg:block"
         >
-          Wildlife
+          Whale Safari
         </Link>
         
         {/* Country Dropdown */}
