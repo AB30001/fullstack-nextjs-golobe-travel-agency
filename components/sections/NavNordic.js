@@ -29,9 +29,9 @@ export function NavNordic({ className, type = "default", ...props }) {
         <Image
           src="/images/nordtravel-logo.svg"
           alt="NordTravel"
-          width={140}
-          height={45}
-          className="h-[40px] w-auto"
+          width={182}
+          height={59}
+          className="h-[52px] w-auto"
           priority
         />
       </Link>

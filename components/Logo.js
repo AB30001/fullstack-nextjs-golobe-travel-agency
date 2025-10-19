@@ -8,9 +8,9 @@ export function Logo({ className }) {
       <Image
         src="/images/nordtravel-logo.svg"
         alt="NordTravel"
-        width={120}
-        height={40}
-        className={cn("h-[40px] w-auto", className)}
+        width={156}
+        height={52}
+        className={cn("h-[52px] w-auto", className)}
         priority
       />
     </Link>
