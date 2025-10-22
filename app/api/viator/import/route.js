@@ -92,6 +92,30 @@ export async function GET(request) {
       });
     }
 
+    if (action === 'debug-destinations') {
+      const allDestinations = await viatorService.fetchDestinations();
+      const nordicKeywords = [
+        'norway', 'sweden', 'iceland', 'denmark', 'finland',
+        'oslo', 'bergen', 'trondheim', 'tromsø', 'tromso',
+        'stockholm', 'gothenburg', 'malmo',
+        'reykjavik', 'akureyri',
+        'copenhagen', 'aarhus',
+        'helsinki', 'tampere', 'rovaniemi'
+      ];
+      
+      const matches = allDestinations.filter(dest => {
+        const name = dest.name?.toLowerCase() || '';
+        return nordicKeywords.some(keyword => name.includes(keyword));
+      });
+      
+      return NextResponse.json({
+        success: true,
+        totalDestinations: allDestinations.length,
+        nordicMatches: matches.length,
+        matches: matches.map(d => ({ id: d.destinationId, name: d.name, type: d.type }))
+      });
+    }
+
     if (action === 'preview') {
       const maxPerCountry = parseInt(url.searchParams.get('max') || '10');
       const viatorProducts = await viatorService.getAllNordicProducts(maxPerCountry);
