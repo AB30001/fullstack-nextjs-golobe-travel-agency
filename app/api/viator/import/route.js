@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getOperationDB } from '@/lib/db/getOperationDB';
+import { connectToDB } from '@/lib/db/utilsDB';
 import { Experience } from '@/lib/db/models';
 import { viatorService } from '@/lib/services/viator';
 import { transformMultipleViatorProducts } from '@/lib/services/viatorTransformer';
@@ -11,7 +11,7 @@ export async function POST(request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    await getOperationDB();
+    await connectToDB();
 
     const body = await request.json();
     const { maxPerCountry = 50, clearExisting = false } = body;
@@ -79,7 +79,7 @@ export async function POST(request) {
 
 export async function GET(request) {
   try {
-    await getOperationDB();
+    await connectToDB();
     
     const url = new URL(request.url);
     const action = url.searchParams.get('action');
