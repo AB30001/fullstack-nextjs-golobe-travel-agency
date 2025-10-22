@@ -72,6 +72,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "**.replit.dev",
       },
+      {
+        protocol: "https",
+        hostname: "media-cdn.tripadvisor.com",
+      },
     ],
   },
   async headers() {

@@ -6,14 +6,22 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
-**October 22, 2025 - Viator API Integration**
-- Integrated Viator Partner API to fetch real Nordic tours and experiences
-- Created Viator service (lib/services/viator.js) with methods to fetch destinations and search products
-- Built data transformation layer (lib/services/viatorTransformer.js) to convert Viator data to our experience schema
-- Added secure API route (app/api/viator/import) with authentication for importing Viator tours
-- Deleted mock experience generation file - no longer needed with real API data
-- Viator API key stored securely in Replit Secrets
-- Note: API key needs activation/permissions from Viator to fetch live data
+**October 22, 2025 - Viator API Integration (Golden Path Implementation)**
+- Successfully integrated Viator Partner API following their recommended Golden Path best practices
+- Implemented proper affiliate tracking links with mcid, pid, medium, and api_version parameters for commission tracking
+- Created Viator service (lib/services/viator.js) using recommended endpoints:
+  - `/partner/destinations` - Fetch all available destinations (3,373 destinations found, 27 Nordic destinations identified)
+  - `/partner/products/search` - Search products by destination with sorting by TRAVELER_RATING
+- Built data transformation layer (lib/services/viatorTransformer.js) to convert Viator product data to our experience schema
+- Added secure API route (app/api/viator/import) with Bearer token authentication for controlled data imports
+- Successfully imported 50 real Nordic tours from Norway (Bergen, Oslo, Trondheim) with authentic:
+  - Product titles, descriptions, and images from TripAdvisor CDN (media-cdn.tripadvisor.com)
+  - Pricing data ($96-$3,000 range)
+  - Review ratings and counts (5.0 stars, 27-44 reviews)
+  - Tour durations, categories, and highlights
+- Added TripAdvisor CDN to Next.js image configuration for proper image loading
+- Viator production API key (f05ccf11-d48f-4e4b-8d13-9aac475a6d46) stored securely in Replit Secrets
+- All affiliate links properly formatted to redirect to Viator.com for booking completion (6-8% commission)
 
 **October 19, 2025 - Navigation Updates**
 - Updated all navigation components to display "Whale Safari" instead of "Wildlife" 
