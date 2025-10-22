@@ -6,6 +6,15 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
+**October 22, 2025 - Viator API Integration**
+- Integrated Viator Partner API to fetch real Nordic tours and experiences
+- Created Viator service (lib/services/viator.js) with methods to fetch destinations and search products
+- Built data transformation layer (lib/services/viatorTransformer.js) to convert Viator data to our experience schema
+- Added secure API route (app/api/viator/import) with authentication for importing Viator tours
+- Deleted mock experience generation file - no longer needed with real API data
+- Viator API key stored securely in Replit Secrets
+- Note: API key needs activation/permissions from Viator to fetch live data
+
 **October 19, 2025 - Navigation Updates**
 - Updated all navigation components to display "Whale Safari" instead of "Wildlife" 
 - Redesigned homepage navigation (NavMinimal.js) with white background and shadow
