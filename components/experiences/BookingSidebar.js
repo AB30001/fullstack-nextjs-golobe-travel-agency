@@ -1,13 +1,71 @@
 "use client";
 
-import { useState } from "react";
-import { Calendar, Users, ExternalLink, Check, Shield } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Calendar, Users, ExternalLink, Check, Shield, Loader2 } from "lucide-react";
 
 export function BookingSidebar({ experience }) {
   const [travelers, setTravelers] = useState(2);
   const [selectedDate, setSelectedDate] = useState("");
+  const [availability, setAvailability] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [unavailableDates, setUnavailableDates] = useState(new Set());
 
   const today = new Date().toISOString().split("T")[0];
+
+  useEffect(() => {
+    async function fetchAvailability() {
+      const productCode = experience.slug.split('-').pop();
+      
+      if (!productCode) {
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch(`/api/viator/availability?productCode=${productCode}`);
+        
+        if (response.ok) {
+          const data = await response.json();
+          setAvailability(data.availability);
+          
+          const unavailable = new Set();
+          if (data.availability?.bookableItems) {
+            data.availability.bookableItems.forEach(item => {
+              if (item.seasons) {
+                item.seasons.forEach(season => {
+                  if (season.pricingRecords) {
+                    season.pricingRecords.forEach(record => {
+                      if (record.daysOfWeek && record.daysOfWeek.length > 0) {
+                        record.daysOfWeek.forEach(day => {
+                          if (day.unavailableDates) {
+                            day.unavailableDates.forEach(dateStr => {
+                              unavailable.add(dateStr);
+                            });
+                          }
+                        });
+                      }
+                    });
+                  }
+                });
+              }
+            });
+          }
+          
+          setUnavailableDates(unavailable);
+        }
+      } catch (error) {
+        console.error('Error fetching availability:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchAvailability();
+  }, [experience.slug]);
+
+  const isDateUnavailable = (dateStr) => {
+    return unavailableDates.has(dateStr);
+  };
 
   return (
     <div className="sticky top-20 rounded-lg border border-gray-200 bg-white p-6 shadow-lg">
@@ -31,7 +89,22 @@ export function BookingSidebar({ experience }) {
               min={today}
               className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
             />
+            {loading && (
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
+              </div>
+            )}
           </div>
+          {selectedDate && isDateUnavailable(selectedDate) && (
+            <div className="mt-1 text-xs text-red-600">
+              This date is not available. Please select another date.
+            </div>
+          )}
+          {!loading && availability && (
+            <div className="mt-1 text-xs text-gray-500">
+              Real-time availability from Viator
+            </div>
+          )}
         </div>
 
         <div>
@@ -61,7 +134,7 @@ export function BookingSidebar({ experience }) {
         rel="noopener noreferrer"
         className="mb-3 flex w-full items-center justify-center gap-2 rounded-lg bg-black px-6 py-3.5 font-semibold text-white transition-colors hover:bg-gray-800"
       >
-        Check Availability
+        Book Tour
         <ExternalLink className="h-4 w-4" />
       </a>
 
