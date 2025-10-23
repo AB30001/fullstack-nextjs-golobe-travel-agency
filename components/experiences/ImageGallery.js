@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 export function ImageGallery({ images, title }) {
@@ -11,24 +11,53 @@ export function ImageGallery({ images, title }) {
   const displayImages = images.slice(0, 5);
   const totalImages = images.length;
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+      
+      const handleKeyDown = (e) => {
+        if (e.key === 'Escape') {
+          closeModal();
+        } else if (e.key === 'ArrowLeft') {
+          prevImage();
+        } else if (e.key === 'ArrowRight') {
+          nextImage();
+        }
+      };
+      
+      document.addEventListener('keydown', handleKeyDown);
+      
+      return () => {
+        document.body.style.overflow = 'unset';
+        document.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+  }, [isModalOpen, currentImageIndex]);
+
   const openModal = (index = 0) => {
     setCurrentImageIndex(index);
     setIsModalOpen(true);
-    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
-    document.body.style.overflow = 'unset';
   };
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % totalImages);
+    if (totalImages > 0) {
+      setCurrentImageIndex((prev) => (prev + 1) % totalImages);
+    }
   };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + totalImages) % totalImages);
+    if (totalImages > 0) {
+      setCurrentImageIndex((prev) => (prev - 1 + totalImages) % totalImages);
+    }
   };
+
+  if (!images || images.length === 0) {
+    return null;
+  }
 
   return (
     <>
@@ -83,7 +112,12 @@ export function ImageGallery({ images, title }) {
 
       {/* Full-screen modal/lightbox */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image gallery"
+        >
           {/* Close button */}
           <button
             onClick={closeModal}
@@ -139,6 +173,7 @@ export function ImageGallery({ images, title }) {
                       ? "border-white"
                       : "border-transparent opacity-60 hover:opacity-100"
                   }`}
+                  aria-label={`View image ${idx + 1}`}
                 >
                   <Image
                     src={image}
