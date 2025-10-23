@@ -6,6 +6,16 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
+**October 23, 2025 - Sticky CTA Bar (Viator-Style)**
+- Implemented professional sticky CTA bar that appears at bottom of tour pages when scrolling
+- Shows on all devices (desktop and mobile) after scrolling 300px
+- Features green "Check Availability" button (emerald-600) matching Viator's design
+- Displays price with "from $X per person" format
+- Shows "Lowest Price Guarantee" text
+- Includes heart/save button for wishlist functionality
+- Responsive design with proper spacing and shadows
+- Smooth appearance/disappearance based on scroll position
+
 **October 23, 2025 - Complete Image Gallery Overhaul**
 - Removed ALL image limits - now displaying every image Viator provides (15-28 images per tour)
 - Completely redesigned ImageGallery component with modern grid layout (1 large + 4 smaller images)
@@ -116,7 +126,7 @@ Preferred communication style: Simple, everyday language.
 **Key Pages**
 - Homepage: Hero search, country cards, top-rated experiences, popular categories
 - Experiences listing: Filterable grid with country, category, price, and rating filters
-- Experience detail: Photo gallery with 15-28 images, full-screen lightbox, reviews, highlights, affiliate booking CTA
+- Experience detail: Photo gallery with 15-28 images, full-screen lightbox, reviews, highlights, affiliate booking CTA, sticky CTA bar
 - Country pages: Landing pages for each Nordic country
 
 ## Backend Architecture
@@ -202,6 +212,7 @@ Preferred communication style: Simple, everyday language.
 - What's included/not included lists
 - Aggregate review data (rating and count from Viator)
 - Direct affiliate booking links
+- Sticky CTA bar with "Check Availability" button (appears on scroll)
 
 **Reviews System**
 - Displays aggregate review data from Viator (rating + count)
