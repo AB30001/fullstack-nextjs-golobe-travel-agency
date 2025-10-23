@@ -57,7 +57,7 @@ export function StickyMobileBar({ price, affiliateLink }) {
               />
             </button>
 
-            {/* Check Availability button */}
+            {/* Book Tour button */}
             <a
               href={affiliateLink}
               target="_blank"
@@ -65,7 +65,7 @@ export function StickyMobileBar({ price, affiliateLink }) {
               className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-emerald-700 sm:px-6"
             >
               <span className="whitespace-nowrap text-sm sm:text-base">
-                Check Availability
+                Book Tour
               </span>
               <ExternalLink className="hidden h-4 w-4 sm:block" />
             </a>
