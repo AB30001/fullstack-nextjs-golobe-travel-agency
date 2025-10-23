@@ -6,10 +6,21 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
+**October 23, 2025 - Real-Time Availability Calendar & "Book Tour" CTA**
+- Integrated Viator availability API to show real-time tour availability
+- Added `/api/viator/availability` endpoint that fetches live availability schedules from Viator
+- Updated BookingSidebar to fetch and display unavailable dates from Viator API
+- Calendar now validates selected dates against Viator's unavailable dates and shows error messages
+- Extracts productCode from experience slug for availability lookups
+- Shows loading indicator while fetching availability data
+- Changed ALL CTA button text from "Check Availability" to "Book Tour" across the site
+- Updated both BookingSidebar and StickyMobileBar components for consistency
+- Links send users directly to Viator for booking completion (6-8% affiliate commission)
+
 **October 23, 2025 - Sticky CTA Bar (Viator-Style)**
 - Implemented professional sticky CTA bar that appears at bottom of tour pages when scrolling
 - Shows on all devices (desktop and mobile) after scrolling 300px
-- Features green "Check Availability" button (emerald-600) matching Viator's design
+- Features green "Book Tour" button (emerald-600) matching Viator's design
 - Displays price with "from $X per person" format
 - Shows "Lowest Price Guarantee" text
 - Includes heart/save button for wishlist functionality
