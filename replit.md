@@ -6,6 +6,15 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
+**October 23, 2025 - Enhanced Image Galleries with Full Product Details**
+- Updated Viator integration to fetch full product details using `/products/{productCode}` endpoint
+- Now displays 10-12 high-quality images per tour (up from 3 images)
+- Fixed duplicate image bug in ImageGallery component
+- Each tour now shows complete photo gallery matching what's available on Viator.com
+- Image extraction combines both `images` and `productImages` arrays with automatic deduplication
+- Import process enriches each product with full details including complete image galleries
+- Gallery displays 1 main image + up to 3 thumbnails with "View all photos" button
+
 **October 23, 2025 - Implemented "Read Reviews on Viator" Solution**
 - Updated ReviewsList component to show "Read Reviews on Viator" button when no local reviews exist
 - Button displays aggregate rating data (e.g., "80 verified reviews with 5.0/5.0 rating on Viator")
@@ -21,10 +30,12 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 - Created Viator service (lib/services/viator.js) using recommended endpoints:
   - `/partner/destinations` - Fetch all available destinations (3,373 destinations found, 27 Nordic destinations identified)
   - `/partner/products/search` - Search products by destination with sorting by TRAVELER_RATING
+  - `/partner/products/{productCode}` - Fetch complete product details including all images
 - Built data transformation layer (lib/services/viatorTransformer.js) to convert Viator product data to our experience schema
 - Added secure API route (app/api/viator/import) with Bearer token authentication for controlled data imports
-- Successfully imported 50 real Nordic tours from Norway (Bergen, Oslo, Trondheim) with authentic:
-  - Product titles, descriptions, and images from TripAdvisor CDN (media-cdn.tripadvisor.com)
+- Successfully imported 50 real Nordic tours with authentic:
+  - Product titles, descriptions, and complete image galleries from TripAdvisor CDN (media-cdn.tripadvisor.com)
+  - 10-12 high-quality images per tour showing diverse angles and experiences
   - Pricing data ($96-$3,000 range)
   - Review ratings and counts (5.0 stars, 27-44 reviews)
   - Tour durations, categories, and highlights
@@ -100,7 +111,7 @@ Preferred communication style: Simple, everyday language.
 **Key Pages**
 - Homepage: Hero search, country cards, top-rated experiences, popular categories
 - Experiences listing: Filterable grid with country, category, price, and rating filters
-- Experience detail: Photo gallery, reviews, highlights, affiliate booking CTA
+- Experience detail: Photo gallery with 10-12 images, reviews, highlights, affiliate booking CTA
 - Country pages: Landing pages for each Nordic country
 
 ## Backend Architecture
@@ -109,7 +120,7 @@ Preferred communication style: Simple, everyday language.
 - Next.js API Routes for serverless functions
 - RESTful endpoints for data retrieval
 - Authentication infrastructure preserved (NextAuth) for future use
-- Data generation endpoints for sample content
+- Viator API import endpoint with Bearer token authentication
 
 **Data Access Layer**
 - Custom database utility functions for CRUD operations
@@ -131,7 +142,7 @@ Preferred communication style: Simple, everyday language.
 - Indexing for search performance (country, category, rating)
 
 **Data Models**
-- Experiences: Tours and activities with location, category, pricing, images, affiliate links
+- Experiences: Tours and activities with location, category, pricing, 10-12 images per tour, affiliate links
 - Reviews: User-submitted reviews with ratings, photos, and travel details (no user accounts required)
 
 **Caching Strategy**
@@ -142,6 +153,9 @@ Preferred communication style: Simple, everyday language.
 
 **Affiliate Partners**
 - Viator (primary) - Real tour data via Partner API with 6-8% commission
+  - Uses `/products/search` to discover tours
+  - Uses `/products/{productCode}` to fetch complete details including all images
+  - Enrichment process fetches full details for each product during import
 - GetYourGuide (secondary) - For additional experience bookings
 - External links with affiliate tracking parameters
 
@@ -175,7 +189,7 @@ Preferred communication style: Simple, everyday language.
 - Search by keywords
 
 **Experience Details**
-- High-quality photo galleries
+- High-quality photo galleries with 10-12 images per tour
 - Detailed descriptions and highlights
 - Duration, language, and meeting point information
 - What's included/not included lists

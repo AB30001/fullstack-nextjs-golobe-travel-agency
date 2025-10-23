@@ -39,7 +39,9 @@ export default async function ExperienceDetailPage({ params }) {
   }
 
   const reviews = await getExperienceReviews(experience._id, { limit: 10 });
-  const images = [experience.coverImage, ...experience.images];
+  const images = experience.images && experience.images.length > 0 
+    ? experience.images 
+    : [experience.coverImage];
 
   return (
     <div className="min-h-screen bg-gray-50">
