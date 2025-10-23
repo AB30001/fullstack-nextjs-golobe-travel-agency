@@ -6,14 +6,19 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
-**October 23, 2025 - Enhanced Image Galleries with Full Product Details**
-- Updated Viator integration to fetch full product details using `/products/{productCode}` endpoint
-- Now displays 10-12 high-quality images per tour (up from 3 images)
-- Fixed duplicate image bug in ImageGallery component
-- Each tour now shows complete photo gallery matching what's available on Viator.com
-- Image extraction combines both `images` and `productImages` arrays with automatic deduplication
-- Import process enriches each product with full details including complete image galleries
-- Gallery displays 1 main image + up to 3 thumbnails with "View all photos" button
+**October 23, 2025 - Complete Image Gallery Overhaul**
+- Removed ALL image limits - now displaying every image Viator provides (15-28 images per tour)
+- Completely redesigned ImageGallery component with modern grid layout (1 large + 4 smaller images)
+- Added full-screen lightbox/modal with keyboard navigation (Escape, Arrow keys)
+- Added thumbnail strip at bottom of lightbox for quick navigation
+- Implemented proper accessibility: role="dialog", aria-modal, aria-labels, keyboard handlers
+- Added defensive checks for empty arrays and proper scroll lock cleanup via useEffect
+- Fixed two critical bugs:
+  - Line 137: Removed .slice(0, 10) from extractImages function
+  - Line 227: Removed .slice(0, 10) from transform function
+- Results: Fjord cruise shows 26 images, RIB adventure shows 15 images (matching Viator exactly)
+- Each tour now displays "View all X photos" button with accurate count
+- Gallery is responsive, accessible, and production-ready
 
 **October 23, 2025 - Implemented "Read Reviews on Viator" Solution**
 - Updated ReviewsList component to show "Read Reviews on Viator" button when no local reviews exist
@@ -35,7 +40,7 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 - Added secure API route (app/api/viator/import) with Bearer token authentication for controlled data imports
 - Successfully imported 50 real Nordic tours with authentic:
   - Product titles, descriptions, and complete image galleries from TripAdvisor CDN (media-cdn.tripadvisor.com)
-  - 10-12 high-quality images per tour showing diverse angles and experiences
+  - 15-28 high-quality images per tour showing diverse angles and experiences
   - Pricing data ($96-$3,000 range)
   - Review ratings and counts (5.0 stars, 27-44 reviews)
   - Tour durations, categories, and highlights
@@ -111,7 +116,7 @@ Preferred communication style: Simple, everyday language.
 **Key Pages**
 - Homepage: Hero search, country cards, top-rated experiences, popular categories
 - Experiences listing: Filterable grid with country, category, price, and rating filters
-- Experience detail: Photo gallery with 10-12 images, reviews, highlights, affiliate booking CTA
+- Experience detail: Photo gallery with 15-28 images, full-screen lightbox, reviews, highlights, affiliate booking CTA
 - Country pages: Landing pages for each Nordic country
 
 ## Backend Architecture
@@ -142,7 +147,7 @@ Preferred communication style: Simple, everyday language.
 - Indexing for search performance (country, category, rating)
 
 **Data Models**
-- Experiences: Tours and activities with location, category, pricing, 10-12 images per tour, affiliate links
+- Experiences: Tours and activities with location, category, pricing, 15-28 images per tour, affiliate links
 - Reviews: User-submitted reviews with ratings, photos, and travel details (no user accounts required)
 
 **Caching Strategy**
@@ -189,7 +194,9 @@ Preferred communication style: Simple, everyday language.
 - Search by keywords
 
 **Experience Details**
-- High-quality photo galleries with 10-12 images per tour
+- High-quality photo galleries with 15-28 images per tour (all images from Viator)
+- Modern grid layout: 1 large image + 4 smaller images
+- Full-screen lightbox with keyboard navigation and thumbnail strip
 - Detailed descriptions and highlights
 - Duration, language, and meeting point information
 - What's included/not included lists
