@@ -33,17 +33,9 @@ export function BookingSidebar({ experience }) {
             data.availability.bookableItems.forEach(item => {
               if (item.seasons) {
                 item.seasons.forEach(season => {
-                  if (season.pricingRecords) {
-                    season.pricingRecords.forEach(record => {
-                      if (record.daysOfWeek && record.daysOfWeek.length > 0) {
-                        record.daysOfWeek.forEach(day => {
-                          if (day.unavailableDates) {
-                            day.unavailableDates.forEach(dateStr => {
-                              unavailable.add(dateStr);
-                            });
-                          }
-                        });
-                      }
+                  if (season.unavailableDates && Array.isArray(season.unavailableDates)) {
+                    season.unavailableDates.forEach(dateStr => {
+                      unavailable.add(dateStr);
                     });
                   }
                 });
