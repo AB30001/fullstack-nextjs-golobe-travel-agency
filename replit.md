@@ -6,6 +6,15 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
+**October 23, 2025 - Implemented "Read Reviews on Viator" Solution**
+- Updated ReviewsList component to show "Read Reviews on Viator" button when no local reviews exist
+- Button displays aggregate rating data (e.g., "80 verified reviews with 5.0/5.0 rating on Viator")
+- Links directly to Viator product page via affiliate link (drives booking traffic, earns 6-8% commission)
+- Clean, user-friendly design with blue CTA button and external link icon
+- Explains that authentic traveler reviews are available on Viator
+- Solution addresses API limitation: Viator Basic Access only provides aggregate review data, not individual review text
+- To get individual review text would require upgrading to Full Access API (free upgrade via affiliateapi@tripadvisor.com)
+
 **October 22, 2025 - Viator API Integration (Golden Path Implementation)**
 - Successfully integrated Viator Partner API following their recommended Golden Path best practices
 - Implemented proper affiliate tracking links with mcid, pid, medium, and api_version parameters for commission tracking
@@ -132,9 +141,9 @@ Preferred communication style: Simple, everyday language.
 ## External Dependencies
 
 **Affiliate Partners**
-- GetYourGuide for experience bookings
-- Viator for tour bookings
-- External links with tracking
+- Viator (primary) - Real tour data via Partner API with 6-8% commission
+- GetYourGuide (secondary) - For additional experience bookings
+- External links with affiliate tracking parameters
 
 **Third-party Libraries**
 - date-fns for date formatting
@@ -170,16 +179,15 @@ Preferred communication style: Simple, everyday language.
 - Detailed descriptions and highlights
 - Duration, language, and meeting point information
 - What's included/not included lists
-- User reviews with ratings and photos
+- Aggregate review data (rating and count from Viator)
 - Direct affiliate booking links
 
 **Reviews System**
-- No user accounts required for reviews
-- Rating from 1-5 stars
-- Detailed ratings (value, safety, service, organization)
-- Review photos and verified bookings
-- Travel date and trip type information
-- Helpful vote system
+- Displays aggregate review data from Viator (rating + count)
+- "Read Reviews on Viator" button links to full reviews on Viator.com
+- Design decision: Drives booking traffic to earn affiliate commissions
+- API limitation: Viator Basic Access only provides aggregate data, not individual review text
+- Future option: Upgrade to Full Access API for individual review text (free via affiliateapi@tripadvisor.com)
 
 **Nordic Country Focus**
 - Dedicated landing pages for each country

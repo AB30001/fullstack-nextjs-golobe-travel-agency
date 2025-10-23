@@ -1,12 +1,26 @@
-import { Star, ThumbsUp } from "lucide-react";
+import { Star, ThumbsUp, ExternalLink } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import Image from "next/image";
 
-export function ReviewsList({ reviews, experienceId }) {
+export function ReviewsList({ reviews, experienceId, totalReviews, rating, affiliateLink }) {
   if (reviews.length === 0) {
     return (
-      <div className="py-8 text-center text-gray-500">
-        No reviews yet. Be the first to review this experience!
+      <div className="py-8 text-center">
+        <p className="mb-6 text-gray-700">
+          This experience has <strong>{totalReviews} verified reviews</strong> with an average rating of <strong>{rating}/5.0</strong> on Viator.
+        </p>
+        <a
+          href={affiliateLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700"
+        >
+          Read Reviews on Viator
+          <ExternalLink className="h-5 w-5" />
+        </a>
+        <p className="mt-4 text-sm text-gray-500">
+          View authentic traveler reviews and book your experience on Viator
+        </p>
       </div>
     );
   }

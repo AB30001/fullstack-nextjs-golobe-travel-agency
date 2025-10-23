@@ -214,7 +214,13 @@ export default async function ExperienceDetailPage({ params }) {
                   </div>
                 </div>
               </div>
-              <ReviewsList reviews={reviews} experienceId={experience._id} />
+              <ReviewsList 
+                reviews={reviews} 
+                experienceId={experience._id}
+                totalReviews={experience.totalReviews}
+                rating={experience.averageRating.toFixed(1)}
+                affiliateLink={experience.affiliateLink}
+              />
             </div>
 
             <SimilarExperiences
