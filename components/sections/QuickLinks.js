@@ -44,16 +44,16 @@ export function QuickLinks() {
     ],
     "Travel Blogs": [
       {
-        name: "Bali Travel Guide",
-        href: "#",
+        name: "Sweden Travel Guide",
+        href: "https://www.swedentips.se/",
       },
       {
-        name: "Srilanka Travel Guide",
-        href: "#",
+        name: "Denmark Travel Guide",
+        href: "https://thecopenhagentales.com/",
       },
       {
-        name: "Peru Travel Guide",
-        href: "#",
+        name: "Iceland Travel Guide",
+        href: "https://www.icelandair.com/blog/",
       },
     ],
     "About Us": [
