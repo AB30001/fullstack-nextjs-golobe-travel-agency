@@ -27,19 +27,19 @@ export function QuickLinks() {
     "Our Activity": [
       {
         name: "Northern Lights",
-        href: "#",
+        href: "/experiences?category=Northern+Lights",
       },
       {
-        name: "Cruising & Sailing",
-        href: "#",
+        name: "Fjord Tours",
+        href: "/experiences?category=Fjord+Tours",
       },
       {
-        name: "Multi-activities",
-        href: "#",
+        name: "Wildlife Safari",
+        href: "/experiences?category=Wildlife+Safari",
       },
       {
-        name: "Kayaing",
-        href: "#",
+        name: "Hiking & Trekking",
+        href: "/experiences?category=Hiking+%26+Trekking",
       },
     ],
     "Travel Blogs": [
