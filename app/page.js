@@ -160,7 +160,7 @@ export default async function HomePage() {
               className="group relative h-48 overflow-hidden rounded-lg"
             >
               <Image
-                src="https://images.unsplash.com/photo-1551244073-f8f8e57d57ae"
+                src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44"
                 alt="Wildlife Safari"
                 fill
                 className="object-cover transition-transform group-hover:scale-110"
@@ -176,7 +176,7 @@ export default async function HomePage() {
               className="group relative h-48 overflow-hidden rounded-lg"
             >
               <Image
-                src="https://images.unsplash.com/photo-1575629280303-b8f78f1d6b54"
+                src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3"
                 alt="Cultural Tours"
                 fill
                 className="object-cover transition-transform group-hover:scale-110"

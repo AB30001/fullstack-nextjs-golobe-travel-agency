@@ -6,6 +6,20 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
 
 # Recent Changes
 
+**October 24, 2025 - Footer Updates & Image Fixes**
+- Updated footer "Our Destination" section to display all 5 Nordic countries with working links:
+  - Norway, Sweden, Iceland, Denmark, Finland (all link to country-filtered experiences pages)
+- Updated footer "Our Activity" section with current categories:
+  - Northern Lights, Fjord Tours, Wildlife Safari, Hiking & Trekking (all link to category-filtered experiences pages)
+- Updated footer "Travel Blogs" section with authentic Nordic travel resources:
+  - Sweden Travel Guide → swedentips.se
+  - Denmark Travel Guide → thecopenhagentales.com  
+  - Iceland Travel Guide → icelandair.com/blog
+- Fixed broken category images on homepage "Popular Categories" section:
+  - Wildlife Safari: Updated to working Unsplash image (photo-1564760055775-d63b17a55c44)
+  - Cultural Tours: Updated to working Unsplash image (photo-1527004013197-933c4bb611b3)
+- All footer links now properly reflect Nordic-focused brand identity
+
 **October 23, 2025 - Real-Time Availability Calendar & "Book Tour" CTA**
 - Integrated Viator availability API to show real-time tour availability
 - Added `/api/viator/availability` endpoint that fetches live availability schedules from Viator
