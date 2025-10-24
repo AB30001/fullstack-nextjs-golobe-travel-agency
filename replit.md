@@ -16,7 +16,7 @@ The platform provides a streamlined browsing experience focused on affiliate-bas
   - Denmark Travel Guide → thecopenhagentales.com  
   - Iceland Travel Guide → icelandair.com/blog
 - Fixed broken category images on homepage "Popular Categories" section:
-  - Wildlife Safari: Updated to working Unsplash image (photo-1564760055775-d63b17a55c44)
+  - Wildlife Safari: Updated to whale/orca image matching Nordic theme (photo-1559827260-dc66d52bef19)
   - Cultural Tours: Updated to working Unsplash image (photo-1527004013197-933c4bb611b3)
 - All footer links now properly reflect Nordic-focused brand identity
 

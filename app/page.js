@@ -160,7 +160,7 @@ export default async function HomePage() {
               className="group relative h-48 overflow-hidden rounded-lg"
             >
               <Image
-                src="https://images.unsplash.com/photo-1564760055775-d63b17a55c44"
+                src="https://images.unsplash.com/photo-1559827260-dc66d52bef19"
                 alt="Wildlife Safari"
                 fill
                 className="object-cover transition-transform group-hover:scale-110"
