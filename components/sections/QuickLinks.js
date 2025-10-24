@@ -4,20 +4,24 @@ export function QuickLinks() {
   const links = {
     "Our Destination": [
       {
-        name: "Canada",
-        href: "/",
+        name: "Norway",
+        href: "/experiences?country=Norway",
       },
       {
-        name: "Alaska",
-        href: "#",
-      },
-      {
-        name: "France",
-        href: "#",
+        name: "Sweden",
+        href: "/experiences?country=Sweden",
       },
       {
         name: "Iceland",
-        href: "#",
+        href: "/experiences?country=Iceland",
+      },
+      {
+        name: "Denmark",
+        href: "/experiences?country=Denmark",
+      },
+      {
+        name: "Finland",
+        href: "/experiences?country=Finland",
       },
     ],
     "Our Activity": [
