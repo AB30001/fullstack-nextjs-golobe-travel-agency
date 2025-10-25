@@ -5,7 +5,6 @@ import { ReviewsList } from "@/components/experiences/ReviewsList";
 import { Breadcrumb } from "@/components/experiences/Breadcrumb";
 import { ExperienceTabs } from "@/components/experiences/ExperienceTabs";
 import { RatingBadge } from "@/components/experiences/RatingBadge";
-import { TravelersChoiceBadge } from "@/components/experiences/TravelersChoice";
 import { ShareSaveButtons } from "@/components/experiences/ShareSaveButtons";
 import { WhyTravelersLove } from "@/components/experiences/WhyTravelersLove";
 import { BookingSidebar } from "@/components/experiences/BookingSidebar";
@@ -56,7 +55,6 @@ export default async function ExperienceDetailPage({ params }) {
                 rating={experience.averageRating}
                 totalReviews={experience.totalReviews}
               />
-              {experience.averageRating >= 4.5 && <TravelersChoiceBadge />}
             </div>
           </div>
           <ShareSaveButtons />
