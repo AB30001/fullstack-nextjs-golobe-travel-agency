@@ -1,9 +1,16 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 export function NavNordic({ className, type = "default", ...props }) {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
+
   const types = {
     home: {
       nav: "rounded-[24px] px-[32px] text-white backdrop-blur-[2px]",
@@ -13,6 +20,15 @@ export function NavNordic({ className, type = "default", ...props }) {
       nav: "relative bg-white text-secondary shadow-md",
       logoText: "text-gray-900",
     },
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/experiences?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      router.push('/experiences');
+    }
   };
 
   return (
@@ -59,13 +75,23 @@ export function NavNordic({ className, type = "default", ...props }) {
         >
           Whale Safari
         </Link>
-        <Link
-          href="/experiences"
-          className="flex items-center gap-1 rounded-lg bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
-        >
-          <Search className="h-4 w-4" />
-          Search
-        </Link>
+        
+        {/* Search Input */}
+        <form onSubmit={handleSearch} className="relative">
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search experiences..."
+            className="w-[240px] rounded-lg border border-gray-300 py-2 pl-4 pr-10 text-sm focus:border-blue-600 focus:outline-none focus:ring-1 focus:ring-blue-600"
+          />
+          <button
+            type="submit"
+            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-blue-600"
+          >
+            <Search className="h-4 w-4" />
+          </button>
+        </form>
       </div>
 
       {/* Mobile Menu Button */}
