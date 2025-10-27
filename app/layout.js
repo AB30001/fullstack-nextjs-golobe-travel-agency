@@ -8,8 +8,6 @@ import { StoreProvider } from "@/app/StoreProvider";
 import { SessionProvider } from "next-auth/react";
 import mongoose from "mongoose";
 
-import dynamic from "next/dynamic";
-
 import openGraph from "./opengraph-image.jpg";
 import MaintenancePage from "./MaintenancePage";
 import { MaintenanceNotice } from "./MaintenanceNotice";
@@ -73,13 +71,6 @@ export default async function RootLayout({ children }) {
     }
   }
 
-  const Notice = dynamic(
-    () => import("@/app/_notice").then((mod) => mod.Notice),
-    {
-      ssr: false,
-    },
-  );
-
   const websiteConfig = await getOneDoc(
     "WebsiteConfig",
     {},
@@ -110,7 +101,6 @@ export default async function RootLayout({ children }) {
           <StoreProvider>
             <SessionProvider>
               <div className="mx-auto max-w-[1440px]">
-                <Notice />
                 <MaintenanceNotice maintenanceMode={maintenanceMode} />
                 {children}
               </div>
