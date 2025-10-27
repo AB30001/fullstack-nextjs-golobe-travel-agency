@@ -1,83 +1,8 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Calendar, Users, ExternalLink, Check, Shield, Loader2 } from "lucide-react";
+import { ExternalLink, Check, Shield } from "lucide-react";
 
 export function BookingSidebar({ experience }) {
-  const [travelers, setTravelers] = useState(2);
-  const [selectedDate, setSelectedDate] = useState("");
-  const [availability, setAvailability] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [unavailableDates, setUnavailableDates] = useState(new Set());
-
-  const today = new Date().toISOString().split("T")[0];
-
-  useEffect(() => {
-    async function fetchAvailability() {
-      const productCode = experience.slug.split('-').pop();
-      
-      if (!productCode) {
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const response = await fetch(`/api/viator/availability?productCode=${productCode}`);
-        
-        if (response.ok) {
-          const data = await response.json();
-          setAvailability(data.availability);
-          
-          const unavailable = new Set();
-          if (data.availability?.bookableItems) {
-            data.availability.bookableItems.forEach(item => {
-              if (item.seasons) {
-                item.seasons.forEach(season => {
-                  if (season.unavailableDates && Array.isArray(season.unavailableDates)) {
-                    season.unavailableDates.forEach(dateStr => {
-                      unavailable.add(dateStr);
-                    });
-                  }
-                });
-              }
-            });
-          }
-          
-          setUnavailableDates(unavailable);
-        }
-      } catch (error) {
-        console.error('Error fetching availability:', error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchAvailability();
-  }, [experience.slug]);
-
-  const isDateUnavailable = (dateStr) => {
-    return unavailableDates.has(dateStr);
-  };
-
-  const buildCheckoutUrl = () => {
-    const baseUrl = experience.affiliateLink;
-    const separator = baseUrl.includes('?') ? '&' : '?';
-    
-    const params = [];
-    if (selectedDate) {
-      params.push(`startDate=${selectedDate}`);
-    }
-    if (travelers) {
-      params.push(`adults=${travelers}`);
-    }
-    
-    return params.length > 0 
-      ? `${baseUrl}${separator}${params.join('&')}`
-      : baseUrl;
-  };
-
-  const canBook = selectedDate && !isDateUnavailable(selectedDate);
-
   return (
     <div className="sticky top-20 rounded-lg border border-gray-200 bg-white p-6 shadow-lg">
       <div className="mb-4">
@@ -86,79 +11,11 @@ export function BookingSidebar({ experience }) {
         <div className="text-sm text-gray-600">per adult</div>
       </div>
 
-      <div className="mb-4 space-y-3">
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">
-            Select date
-          </label>
-          <div className="relative">
-            <Calendar className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={(e) => setSelectedDate(e.target.value)}
-              min={today}
-              className="w-full rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-            />
-            {loading && (
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
-              </div>
-            )}
-          </div>
-          {selectedDate && isDateUnavailable(selectedDate) && (
-            <div className="mt-1 text-xs text-red-600">
-              This date is not available. Please select another date.
-            </div>
-          )}
-          {!selectedDate && (
-            <div className="mt-1 text-xs text-gray-500">
-              Please select a travel date
-            </div>
-          )}
-          {selectedDate && !isDateUnavailable(selectedDate) && !loading && (
-            <div className="mt-1 text-xs text-green-600">
-              ✓ This date is available
-            </div>
-          )}
-        </div>
-
-        <div>
-          <label className="mb-1 block text-sm font-medium text-gray-700">
-            Travelers
-          </label>
-          <div className="relative">
-            <Users className="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
-            <select
-              value={travelers}
-              onChange={(e) => setTravelers(Number(e.target.value))}
-              className="w-full appearance-none rounded-lg border border-gray-300 py-2.5 pl-10 pr-4 focus:border-black focus:outline-none focus:ring-1 focus:ring-black"
-            >
-              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
-                <option key={num} value={num}>
-                  {num} {num === 1 ? "traveler" : "travelers"}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </div>
-
       <a
-        href={canBook ? buildCheckoutUrl() : undefined}
+        href={experience.affiliateLink}
         target="_blank"
         rel="noopener noreferrer"
-        onClick={(e) => {
-          if (!canBook) {
-            e.preventDefault();
-            alert('Please select an available travel date.');
-          }
-        }}
-        className={`mb-3 flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3.5 font-semibold text-white transition-colors ${
-          canBook 
-            ? 'bg-teal-600 hover:bg-teal-700 cursor-pointer' 
-            : 'bg-gray-400 cursor-not-allowed'
-        }`}
+        className="mb-3 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-600 px-6 py-3.5 font-semibold text-white transition-colors hover:bg-teal-700"
       >
         Learn More
         <ExternalLink className="h-4 w-4" />
