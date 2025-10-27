@@ -15,7 +15,7 @@ export function BookingSidebar({ experience }) {
         href={experience.affiliateLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="mb-3 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-600 px-6 py-3.5 font-semibold text-white transition-colors hover:bg-teal-700"
+        className="mb-3 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-6 py-3.5 font-semibold text-white transition-colors hover:bg-teal-800"
       >
         Learn More
         <ExternalLink className="h-4 w-4" />
