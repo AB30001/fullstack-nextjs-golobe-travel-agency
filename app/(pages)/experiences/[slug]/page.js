@@ -90,13 +90,6 @@ export default async function ExperienceDetailPage({ params }) {
               </div>
             )}
 
-            <WhatsIncluded 
-              inclusions={experience.inclusions} 
-              exclusions={experience.exclusions} 
-            />
-
-            <WhyTravelersLove reviews={reviews} />
-
             <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
               <h2 className="mb-4 text-2xl font-bold">Quick info</h2>
               <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
@@ -128,41 +121,34 @@ export default async function ExperienceDetailPage({ params }) {
               </div>
             </div>
 
-            <ItinerarySection itinerary={experience.itinerary} />
+            <div id="whats-included">
+              <WhatsIncluded 
+                inclusions={experience.inclusions} 
+                exclusions={experience.exclusions} 
+              />
+            </div>
 
-            <div id="details">
+            <div id="meeting-and-pickup">
               <MeetingPickup 
                 meetingPoint={experience.meetingPoint}
                 endPoint={experience.endPoint}
                 travelerPickup={experience.travelerPickup}
               />
+            </div>
+
+            <div id="what-to-expect">
+              <ItinerarySection itinerary={experience.itinerary} />
+            </div>
+
+            <div id="additional-info">
               <AdditionalInfo 
                 additionalInfo={experience.additionalInfo}
                 languageGuides={experience.languageGuides}
               />
-              <CancellationPolicy cancellationPolicy={experience.cancellationPolicy} />
             </div>
 
-            <div id="operator" className="mb-8 rounded-lg bg-white p-6 shadow-md">
-              <h2 className="mb-4 text-2xl font-bold">About the operator</h2>
-              <p className="mb-4 text-gray-700">
-                This experience is provided by verified local tour operators in {experience.country}. 
-                All operators are carefully selected and meet high standards for safety, quality, and customer satisfaction.
-              </p>
-              <div className="space-y-3 text-sm">
-                <div className="flex items-start gap-3">
-                  <Star className="mt-1 h-5 w-5 fill-yellow-400 text-yellow-400" />
-                  <div>
-                    <span className="font-medium">Highly rated:</span> {experience.averageRating.toFixed(1)}/5.0 based on {experience.totalReviews} reviews
-                  </div>
-                </div>
-                <div className="flex items-start gap-3">
-                  <Users className="mt-1 h-5 w-5 text-gray-600" />
-                  <div>
-                    <span className="font-medium">Small group tours:</span> Maximum 19 travelers for a personal experience
-                  </div>
-                </div>
-              </div>
+            <div id="cancellation-policy">
+              <CancellationPolicy cancellationPolicy={experience.cancellationPolicy} />
             </div>
 
             <div id="reviews" className="mb-8 rounded-lg bg-white p-6 shadow-md">

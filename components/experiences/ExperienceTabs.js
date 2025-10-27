@@ -2,7 +2,16 @@
 
 import { useState, useEffect } from "react";
 
-const tabs = ["Overview", "Details", "Itinerary", "Operator", "Reviews"];
+const tabs = ["Overview", "What's Included", "Meeting and Pickup", "What To Expect", "Additional Info", "Cancellation Policy", "Reviews"];
+
+// Helper function to convert tab names to valid HTML IDs
+const slugify = (text) => {
+  return text
+    .toLowerCase()
+    .replace(/'/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/[^\w\-]/g, '');
+};
 
 export function ExperienceTabs({ initialTab = "Overview" }) {
   const [isSticky, setIsSticky] = useState(false);
@@ -13,8 +22,8 @@ export function ExperienceTabs({ initialTab = "Overview" }) {
       setIsSticky(window.scrollY > 100);
       
       const sections = tabs.map(tab => ({
-        id: tab.toLowerCase(),
-        element: document.getElementById(tab.toLowerCase())
+        id: slugify(tab),
+        element: document.getElementById(slugify(tab))
       })).filter(s => s.element);
 
       const scrollPosition = window.scrollY + 150;
@@ -22,7 +31,7 @@ export function ExperienceTabs({ initialTab = "Overview" }) {
       for (let i = sections.length - 1; i >= 0; i--) {
         const section = sections[i];
         if (section.element.offsetTop <= scrollPosition) {
-          setActiveTab(tabs.find(t => t.toLowerCase() === section.id) || initialTab);
+          setActiveTab(tabs.find(t => slugify(t) === section.id) || initialTab);
           break;
         }
       }
@@ -33,7 +42,7 @@ export function ExperienceTabs({ initialTab = "Overview" }) {
   }, [initialTab]);
 
   const scrollToSection = (tab) => {
-    const sectionId = tab.toLowerCase();
+    const sectionId = slugify(tab);
     const element = document.getElementById(sectionId);
     if (element) {
       const offset = 100;
