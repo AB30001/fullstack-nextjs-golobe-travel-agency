@@ -59,6 +59,25 @@ export function BookingSidebar({ experience }) {
     return unavailableDates.has(dateStr);
   };
 
+  const buildCheckoutUrl = () => {
+    const baseUrl = experience.affiliateLink;
+    const separator = baseUrl.includes('?') ? '&' : '?';
+    
+    const params = [];
+    if (selectedDate) {
+      params.push(`startDate=${selectedDate}`);
+    }
+    if (travelers) {
+      params.push(`adults=${travelers}`);
+    }
+    
+    return params.length > 0 
+      ? `${baseUrl}${separator}${params.join('&')}`
+      : baseUrl;
+  };
+
+  const canBook = selectedDate && !isDateUnavailable(selectedDate);
+
   return (
     <div className="sticky top-20 rounded-lg border border-gray-200 bg-white p-6 shadow-lg">
       <div className="mb-4">
@@ -92,9 +111,14 @@ export function BookingSidebar({ experience }) {
               This date is not available. Please select another date.
             </div>
           )}
-          {!loading && availability && (
+          {!selectedDate && (
             <div className="mt-1 text-xs text-gray-500">
-              Real-time availability from Viator
+              Please select a travel date
+            </div>
+          )}
+          {selectedDate && !isDateUnavailable(selectedDate) && !loading && (
+            <div className="mt-1 text-xs text-green-600">
+              ✓ This date is available
             </div>
           )}
         </div>
@@ -121,10 +145,20 @@ export function BookingSidebar({ experience }) {
       </div>
 
       <a
-        href={experience.affiliateLink}
+        href={canBook ? buildCheckoutUrl() : undefined}
         target="_blank"
         rel="noopener noreferrer"
-        className="mb-3 flex w-full items-center justify-center gap-2 rounded-lg bg-black px-6 py-3.5 font-semibold text-white transition-colors hover:bg-gray-800"
+        onClick={(e) => {
+          if (!canBook) {
+            e.preventDefault();
+            alert('Please select an available travel date before booking.');
+          }
+        }}
+        className={`mb-3 flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3.5 font-semibold text-white transition-colors ${
+          canBook 
+            ? 'bg-black hover:bg-gray-800 cursor-pointer' 
+            : 'bg-gray-400 cursor-not-allowed'
+        }`}
       >
         Book Tour
         <ExternalLink className="h-4 w-4" />
