@@ -15,7 +15,10 @@ export function BookingSidebar({ experience }) {
         href={experience.affiliateLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="mb-3 flex w-full items-center justify-center gap-2 rounded-lg bg-teal-700 px-6 py-3.5 font-semibold text-white transition-colors hover:bg-teal-800"
+        className="mb-3 flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3 text-base font-semibold text-white transition-colors"
+        style={{ backgroundColor: '#186b6d' }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#155a5c'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#186b6d'}
       >
         Learn More
         <ExternalLink className="h-4 w-4" />
