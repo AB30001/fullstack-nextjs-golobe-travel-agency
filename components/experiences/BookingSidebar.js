@@ -151,7 +151,7 @@ export function BookingSidebar({ experience }) {
         onClick={(e) => {
           if (!canBook) {
             e.preventDefault();
-            alert('Please select an available travel date before booking.');
+            alert('Please select an available travel date.');
           }
         }}
         className={`mb-3 flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3.5 font-semibold text-white transition-colors ${
@@ -160,7 +160,7 @@ export function BookingSidebar({ experience }) {
             : 'bg-gray-400 cursor-not-allowed'
         }`}
       >
-        Book Tour
+        Learn More
         <ExternalLink className="h-4 w-4" />
       </a>
 
