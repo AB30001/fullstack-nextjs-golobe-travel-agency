@@ -28,9 +28,6 @@ export function ExperienceCard({ experience }) {
             className="object-cover transition-transform group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute right-2 top-2 rounded-full bg-white px-2 py-1 text-sm font-semibold">
-            {priceRange}
-          </div>
         </div>
 
         <div className="p-4">
