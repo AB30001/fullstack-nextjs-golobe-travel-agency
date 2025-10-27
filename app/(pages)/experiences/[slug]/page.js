@@ -11,6 +11,8 @@ import { BookingSidebar } from "@/components/experiences/BookingSidebar";
 import { MeetingPickup } from "@/components/experiences/MeetingPickup";
 import { AdditionalInfo } from "@/components/experiences/AdditionalInfo";
 import { CancellationPolicy } from "@/components/experiences/CancellationPolicy";
+import { WhatsIncluded } from "@/components/experiences/WhatsIncluded";
+import { ItinerarySection } from "@/components/experiences/ItinerarySection";
 import { SimilarExperiences } from "@/components/experiences/SimilarExperiences";
 import { StickyMobileBar } from "@/components/experiences/StickyMobileBar";
 import { ImageGallery } from "@/components/experiences/ImageGallery";
@@ -88,32 +90,10 @@ export default async function ExperienceDetailPage({ params }) {
               </div>
             )}
 
-            {experience.included && experience.included.length > 0 && (
-              <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
-                <h2 className="mb-4 text-2xl font-bold">What's included</h2>
-                <ul className="space-y-2">
-                  {experience.included.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-3">
-                      <span className="mt-1 text-green-600">✓</span>
-                      <span className="text-gray-700">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-                {experience.notIncluded && experience.notIncluded.length > 0 && (
-                  <>
-                    <h3 className="mb-2 mt-6 font-semibold">What's not included</h3>
-                    <ul className="space-y-2">
-                      {experience.notIncluded.map((item, idx) => (
-                        <li key={idx} className="flex items-start gap-3">
-                          <span className="mt-1 text-red-600">✗</span>
-                          <span className="text-gray-700">{item}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </div>
-            )}
+            <WhatsIncluded 
+              inclusions={experience.inclusions} 
+              exclusions={experience.exclusions} 
+            />
 
             <WhyTravelersLove reviews={reviews} />
 
@@ -148,26 +128,19 @@ export default async function ExperienceDetailPage({ params }) {
               </div>
             </div>
 
-            <div id="details">
-              <MeetingPickup experience={experience} />
-              <AdditionalInfo experience={experience} />
-              <CancellationPolicy />
-            </div>
+            <ItinerarySection itinerary={experience.itinerary} />
 
-            <div id="itinerary" className="mb-8 rounded-lg bg-white p-6 shadow-md">
-              <h2 className="mb-4 text-2xl font-bold">What to expect</h2>
-              <p className="mb-4 text-gray-700">
-                Experience the best of {experience.country} with this carefully curated {experience.category.toLowerCase()} adventure. 
-                Your journey includes all the highlights mentioned above, with expert local guides ensuring an unforgettable experience.
-              </p>
-              <div className="space-y-4">
-                <div className="border-l-4 border-blue-600 bg-blue-50 p-4">
-                  <div className="font-semibold text-blue-900">Duration: {experience.duration.value} {experience.duration.unit}</div>
-                  <div className="mt-2 text-sm text-blue-800">
-                    This tour provides ample time to explore each location and capture amazing photos.
-                  </div>
-                </div>
-              </div>
+            <div id="details">
+              <MeetingPickup 
+                meetingPoint={experience.meetingPoint}
+                endPoint={experience.endPoint}
+                travelerPickup={experience.travelerPickup}
+              />
+              <AdditionalInfo 
+                additionalInfo={experience.additionalInfo}
+                languageGuides={experience.languageGuides}
+              />
+              <CancellationPolicy cancellationPolicy={experience.cancellationPolicy} />
             </div>
 
             <div id="operator" className="mb-8 rounded-lg bg-white p-6 shadow-md">
