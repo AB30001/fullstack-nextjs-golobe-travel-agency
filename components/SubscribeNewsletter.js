@@ -16,18 +16,31 @@ export function SubscribeNewsletter({ isSubscribed }) {
   const [subscribeNewsletterDom, setSubscribeNewsletterDom] = useState(null);
   const [height, setHeight] = useState(0);
   const [error, setError] = useState();
-  const [subscribed, setSubscribed] = useState(isSubscribed);
+  const [subscribed, setSubscribed] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    const subscribedLocal = localStorage.getItem("subscribed");
+    if (subscribedLocal) {
+      setSubscribed(true);
+    } else if (isSubscribed !== undefined) {
+      setSubscribed(isSubscribed);
+    }
+  }, [isSubscribed]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    
     const getId = document.getElementById("newsletter");
     setSubscribeNewsletterDom(getId);
     let h =
-      subscribeNewsletterDom?.parentNode.clientHeight -
+      subscribeNewsletterDom?.parentNode?.clientHeight -
       subscribeNewsletterDom?.clientHeight / 2;
 
     function resize() {
       h =
-        subscribeNewsletterDom?.parentNode.clientHeight -
+        subscribeNewsletterDom?.parentNode?.clientHeight -
         subscribeNewsletterDom?.clientHeight / 2;
       setHeight(isNaN(h) ? 500 : h);
     }
@@ -38,7 +51,7 @@ export function SubscribeNewsletter({ isSubscribed }) {
     return () => {
       window.removeEventListener("resize", resize);
     };
-  }, [subscribeNewsletterDom]);
+  }, [subscribeNewsletterDom, mounted]);
 
   useEffect(() => {
     if (state?.success === true) {
@@ -49,14 +62,6 @@ export function SubscribeNewsletter({ isSubscribed }) {
       setError(state?.error);
     }
   }, [state?.success, state?.error]);
-
-  useEffect(() => {
-    const subscribed = localStorage.getItem("subscribed");
-
-    if (subscribed) {
-      setSubscribed(true);
-    }
-  }, []);
 
   function handleChange(e) {
     const isValid = e.target.value !== "" ? isEmailValid(e.target.value) : null;
