@@ -56,8 +56,8 @@ export function AdditionalInfo({ additionalInfo, languageGuides }) {
                 className="inline-flex items-center rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-700"
               >
                 {getLanguageName(guide.language)}
-                {guide.type === 'AUDIO_GUIDE' && ' (Audio)'}
-                {guide.type === 'WRITTEN' && ' (Written)'}
+                {guide.guideType === 'AUDIO_GUIDE' && ' (Audio)'}
+                {guide.guideType === 'WRITTEN' && ' (Written)'}
               </span>
             ))}
           </div>
