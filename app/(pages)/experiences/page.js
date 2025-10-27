@@ -1,6 +1,7 @@
-import { getAllExperiences } from "@/lib/services/experiences";
+import { getExperiencesWithPagination } from "@/lib/services/experiences";
 import { ExperienceCard } from "@/components/experiences/ExperienceCard";
 import { ExperienceFilters } from "@/components/experiences/ExperienceFilters";
+import { Pagination } from "@/components/ui/Pagination";
 
 export const metadata = {
   title: "Nordic Experiences & Tours | Discover the Best of Scandinavia",
@@ -9,15 +10,20 @@ export const metadata = {
 };
 
 export default async function ExperiencesPage({ searchParams }) {
+  // Sanitize page parameter to ensure it's a valid positive integer
+  const rawPage = searchParams.page ? parseInt(searchParams.page) : 1;
+  const page = isNaN(rawPage) || rawPage < 1 ? 1 : rawPage;
+
   const filters = {
     country: searchParams.country,
     category: searchParams.category,
     priceRange: searchParams.price,
     minRating: searchParams.rating ? parseFloat(searchParams.rating) : undefined,
     search: searchParams.q,
+    page,
   };
 
-  const experiences = await getAllExperiences(filters);
+  const { experiences, pagination } = await getExperiencesWithPagination(filters);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -41,11 +47,23 @@ export default async function ExperiencesPage({ searchParams }) {
                 </p>
               </div>
             ) : (
-              <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {experiences.map((experience) => (
-                  <ExperienceCard key={experience._id} experience={experience} />
-                ))}
-              </div>
+              <>
+                <div className="mb-4 text-sm text-gray-600">
+                  {pagination.total} {pagination.total === 1 ? 'result' : 'results'}
+                </div>
+                
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                  {experiences.map((experience) => (
+                    <ExperienceCard key={experience._id} experience={experience} />
+                  ))}
+                </div>
+
+                <Pagination
+                  currentPage={pagination.page}
+                  totalPages={pagination.totalPages}
+                  baseUrl="/experiences"
+                />
+              </>
             )}
           </main>
         </div>
