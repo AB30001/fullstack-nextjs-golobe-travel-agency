@@ -24,7 +24,7 @@ export function NavMinimal() {
   };
 
   return (
-    <nav className="absolute top-0 left-0 right-0 z-50 flex h-[70px] w-full items-center justify-between bg-white px-[5%] shadow-sm lg:h-[90px]">
+    <nav className="absolute top-0 left-0 right-0 z-50 flex h-[70px] w-full items-center justify-between bg-white px-4 shadow-sm lg:h-[90px]">
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
