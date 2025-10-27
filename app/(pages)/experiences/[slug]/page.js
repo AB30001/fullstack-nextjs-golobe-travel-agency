@@ -14,7 +14,6 @@ import { CancellationPolicy } from "@/components/experiences/CancellationPolicy"
 import { WhatsIncluded } from "@/components/experiences/WhatsIncluded";
 import { ItinerarySection } from "@/components/experiences/ItinerarySection";
 import { SimilarExperiences } from "@/components/experiences/SimilarExperiences";
-import { StickyMobileBar } from "@/components/experiences/StickyMobileBar";
 import { ImageGallery } from "@/components/experiences/ImageGallery";
 
 export async function generateMetadata({ params }) {
@@ -194,8 +193,6 @@ export default async function ExperienceDetailPage({ params }) {
           </div>
         </div>
       </div>
-
-      <StickyMobileBar price={experience.priceFrom} affiliateLink={experience.affiliateLink} />
     </div>
   );
 }

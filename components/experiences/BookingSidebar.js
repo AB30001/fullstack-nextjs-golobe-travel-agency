@@ -156,7 +156,7 @@ export function BookingSidebar({ experience }) {
         }}
         className={`mb-3 flex w-full items-center justify-center gap-2 rounded-lg px-6 py-3.5 font-semibold text-white transition-colors ${
           canBook 
-            ? 'bg-black hover:bg-gray-800 cursor-pointer' 
+            ? 'bg-teal-600 hover:bg-teal-700 cursor-pointer' 
             : 'bg-gray-400 cursor-not-allowed'
         }`}
       >
