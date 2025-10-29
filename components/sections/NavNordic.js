@@ -13,11 +13,11 @@ export function NavNordic({ className, type = "default", ...props }) {
   const [isOpen, setIsOpen] = useState(false);
 
   const countries = [
-    { name: "Norway", slug: "norway" },
-    { name: "Sweden", slug: "sweden" },
-    { name: "Iceland", slug: "iceland" },
-    { name: "Denmark", slug: "denmark" },
-    { name: "Finland", slug: "finland" },
+    "Norway",
+    "Sweden",
+    "Iceland",
+    "Denmark",
+    "Finland",
   ];
 
   const types = {
@@ -40,8 +40,8 @@ export function NavNordic({ className, type = "default", ...props }) {
     }
   };
 
-  const handleCountrySelect = (slug) => {
-    router.push(`/experiences?country=${slug}`);
+  const handleCountrySelect = (country) => {
+    router.push(`/experiences?country=${country}`);
     setIsOpen(false);
   };
 
@@ -112,11 +112,11 @@ export function NavNordic({ className, type = "default", ...props }) {
               <div className="absolute right-0 top-full z-20 mt-2 w-48 rounded-lg bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5">
                 {countries.map((country) => (
                   <button
-                    key={country.slug}
-                    onClick={() => handleCountrySelect(country.slug)}
+                    key={country}
+                    onClick={() => handleCountrySelect(country)}
                     className="block w-full px-4 py-2 text-left text-sm text-gray-700 transition-colors hover:bg-gray-100"
                   >
-                    {country.name}
+                    {country}
                   </button>
                 ))}
               </div>
