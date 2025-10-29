@@ -1,0 +1,119 @@
+09:48:45.327 Running build in Washington, D.C., USA (East) – iad1
+09:48:45.328 Build machine configuration: 2 cores, 8 GB
+09:48:45.459 Cloning github.com/AB30001/fullstack-nextjs-golobe-travel-agency (Branch: master, Commit: 99b6f80)
+09:48:45.463 Previous build caches not available.
+09:48:46.137 Cloning completed: 678.000ms
+09:48:46.577 Running "vercel build"
+09:48:47.071 Vercel CLI 48.6.0
+09:48:47.446 Installing dependencies...
+09:48:50.725 npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+09:48:51.261 npm warn deprecated npmlog@5.0.1: This package is no longer supported.
+09:48:51.993 npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+09:48:52.703 npm warn deprecated gauge@3.0.2: This package is no longer supported.
+09:48:53.177 npm warn deprecated are-we-there-yet@2.0.0: This package is no longer supported.
+09:48:54.097 npm warn deprecated @humanwhocodes/object-schema@2.0.3: Use @eslint/object-schema instead
+09:48:54.174 npm warn deprecated @humanwhocodes/config-array@0.13.0: Use @eslint/config-array instead
+09:48:54.792 npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+09:48:58.571 npm warn deprecated eslint@8.57.1: This version is no longer supported. Please see https://eslint.org/version-support for other options.
+09:49:12.998 
+09:49:12.999 added 865 packages in 25s
+09:49:12.999 
+09:49:13.010 217 packages are looking for funding
+09:49:13.010   run `npm fund` for details
+09:49:13.500 Detected Next.js version: 14.2.30
+09:49:13.507 Running "npm run build"
+09:49:13.628 
+09:49:13.628 > golob_travel_agency@0.1.0 build
+09:49:13.628 > next build
+09:49:13.628 
+09:49:14.316 Attention: Next.js now collects completely anonymous telemetry regarding usage.
+09:49:14.317 This information is used to shape Next.js' roadmap and prioritize features.
+09:49:14.317 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+09:49:14.317 https://nextjs.org/telemetry
+09:49:14.318 
+09:49:14.381   ▲ Next.js 14.2.30
+09:49:14.382 
+09:49:14.438    Creating an optimized production build ...
+09:49:42.806  ⚠ Compiled with warnings
+09:49:42.806 
+09:49:42.807 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.807 Attempted import error: 'FlightBooking' is not exported from '@/lib/db/models' (imported as 'FlightBooking').
+09:49:42.807 
+09:49:42.807 Import trace for requested module:
+09:49:42.807 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.807 
+09:49:42.807 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.808 Attempted import error: 'FlightItinerary' is not exported from '@/lib/db/models' (imported as 'FlightItinerary').
+09:49:42.808 
+09:49:42.808 Import trace for requested module:
+09:49:42.808 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.808 
+09:49:42.808 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.808 Attempted import error: 'FlightItinerary' is not exported from '@/lib/db/models' (imported as 'FlightItinerary').
+09:49:42.808 
+09:49:42.808 Import trace for requested module:
+09:49:42.809 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.809 
+09:49:42.809 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.809 Attempted import error: 'FlightSegment' is not exported from '@/lib/db/models' (imported as 'FlightSegment').
+09:49:42.809 
+09:49:42.809 Import trace for requested module:
+09:49:42.809 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.809 
+09:49:42.809 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.810 Attempted import error: 'FlightSeat' is not exported from '@/lib/db/models' (imported as 'FlightSeat').
+09:49:42.810 
+09:49:42.810 Import trace for requested module:
+09:49:42.810 ./app/api/cronjob/cleanup_db/route.js
+09:49:42.810 
+09:49:42.810    Linting and checking validity of types ...
+09:49:47.990 
+09:49:47.992 Failed to compile.
+09:49:47.992 
+09:49:47.992 ./components/experiences/ImageGallery.js
+09:49:47.992 35:6  Warning: React Hook useEffect has missing dependencies: 'nextImage' and 'prevImage'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+09:49:47.992 
+09:49:47.992 ./components/experiences/TravelersChoice.js
+09:49:47.992 8:73  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+09:49:47.992 
+09:49:47.996 ./components/experiences/WhatsIncluded.js
+09:49:47.996 12:51  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+09:49:47.996 
+09:49:47.996 ./components/helpers/NoSSR.js
+09:49:47.996 8:38  Warning: 'Promise' is not defined.  no-undef
+09:49:47.996 
+09:49:47.996 ./components/pages/settings/sections/ProfileSettings.js
+09:49:48.001 68:6  Warning: React Hook useEffect has missing dependencies: 'userData.address', 'userData.dob', 'userData.emailNotifications', 'userData.firstName', 'userData.lastName', 'userData.phone.dialCode', 'userData.phone.number', and 'userData.smsNotifications'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+09:49:48.002 68:7  Warning: React Hook useEffect has a complex expression in the dependency array. Extract it to a separate variable so it can be statically checked.  react-hooks/exhaustive-deps
+09:49:48.002 130:29  Warning: 'Promise' is not defined.  no-undef
+09:49:48.002 
+09:49:48.002 ./components/pages/settings/ui/DeleteAccountPopupForm.js
+09:49:48.002 26:6  Warning: React Hook useEffect has a missing dependency: 'toast'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+09:49:48.003 
+09:49:48.003 ./lib/hooks/useFetch.js
+09:49:48.003 42:6  Warning: React Hook useEffect has a missing dependency: 'init'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+09:49:48.003 
+09:49:48.003 ./lib/paymentIntegration/stripe/index.js
+09:49:48.003 19:27  Warning: 'Proxy' is not defined.  no-undef
+09:49:48.003 24:20  Warning: 'Promise' is not defined.  no-undef
+09:49:48.003 
+09:49:48.003 ./lib/services/experiences.js
+09:49:48.003 80:40  Warning: 'Promise' is not defined.  no-undef
+09:49:48.004 
+09:49:48.004 ./lib/services/index.js
+09:49:48.004 38:12  Warning: 'Promise' is not defined.  no-undef
+09:49:48.004 
+09:49:48.005 ./lib/services/viator.js
+09:49:48.005 196:25  Warning: 'Promise' is not defined.  no-undef
+09:49:48.005 212:19  Warning: 'Promise' is not defined.  no-undef
+09:49:48.005 
+09:49:48.005 ./lib/services/viatorTransformer.js
+09:49:48.005 108:25  Warning: 'Set' is not defined.  no-undef
+09:49:48.005 
+09:49:48.005 ./lib/utils.js
+09:49:48.005 57:16  Warning: 'Promise' is not defined.  no-undef
+09:49:48.005 305:7  Warning: 'defaultFlightFormValue' is not defined.  no-undef
+09:49:48.005 344:21  Warning: 'Uint8Array' is not defined.  no-undef
+09:49:48.005 
+09:49:48.005 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+09:49:48.076 Error: Command "npm run build" exited with 1
