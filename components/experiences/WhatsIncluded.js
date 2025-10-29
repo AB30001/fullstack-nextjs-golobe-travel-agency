@@ -9,7 +9,7 @@ export function WhatsIncluded({ inclusions, exclusions }) {
 
   return (
     <div className="rounded-lg border bg-white p-6">
-      <h2 className="mb-6 text-2xl font-bold">What's Included</h2>
+      <h2 className="mb-6 text-2xl font-bold">What&apos;s Included</h2>
       
       {inclusions && inclusions.length > 0 && (
         <div className="mb-6">
