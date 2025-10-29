@@ -48,8 +48,6 @@
     "date-fns-tz": "^3.2.0",
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
-    "html2canvas": "^1.4.1",
-    "html2pdf.js": "^0.10.3",
     "image-to-base64": "^2.2.0",
     "jose": "^6.1.0",
     "jspdf": "^3.0.1",
@@ -75,7 +73,6 @@
     "stripe": "^18.2.1",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "text-to-image": "^7.0.1",
     "vaul": "^1.1.1",
     "zod": "^3.23.4"
   },
