@@ -6,15 +6,26 @@ import { useState } from "react";
 export function ShareSaveButtons() {
   const [isSaved, setIsSaved] = useState(false);
 
-  const handleShare = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: document.title,
-        url: window.location.href,
-      });
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      alert("Link copied to clipboard!");
+  const handleShare = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: document.title,
+          url: window.location.href,
+        });
+      } else {
+        await navigator.clipboard.writeText(window.location.href);
+        alert("Link copied to clipboard!");
+      }
+    } catch (error) {
+      if (error.name !== 'AbortError') {
+        try {
+          await navigator.clipboard.writeText(window.location.href);
+          alert("Link copied to clipboard!");
+        } catch (clipboardError) {
+          console.error('Share failed:', error);
+        }
+      }
     }
   };
 
