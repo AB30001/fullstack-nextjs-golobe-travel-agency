@@ -1,8 +1,12 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Star, MapPin, Clock } from "lucide-react";
+import { useCurrency } from "@/lib/contexts/CurrencyContext";
 
 export function ExperienceCard({ experience }) {
+  const { formatPrice } = useCurrency();
   const {
     slug,
     title,
@@ -63,7 +67,7 @@ export function ExperienceCard({ experience }) {
             </div>
             <div className="text-right">
               <div className="text-xs text-gray-500">From</div>
-              <div className="text-lg font-bold">${priceFrom}</div>
+              <div className="text-lg font-bold">{formatPrice(priceFrom)}</div>
             </div>
           </div>
         </div>

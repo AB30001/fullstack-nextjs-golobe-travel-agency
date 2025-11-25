@@ -1,13 +1,16 @@
 "use client";
 
 import { ExternalLink, Check, Shield } from "lucide-react";
+import { useCurrency } from "@/lib/contexts/CurrencyContext";
 
 export function BookingSidebar({ experience }) {
+  const { formatPrice } = useCurrency();
+  
   return (
     <div className="sticky top-20 rounded-lg border border-gray-200 bg-white p-6 shadow-lg">
       <div className="mb-4">
         <div className="text-sm text-gray-600">From</div>
-        <div className="text-3xl font-bold">${experience.priceFrom}</div>
+        <div className="text-3xl font-bold">{formatPrice(experience.priceFrom)}</div>
         <div className="text-sm text-gray-600">per adult</div>
       </div>
 

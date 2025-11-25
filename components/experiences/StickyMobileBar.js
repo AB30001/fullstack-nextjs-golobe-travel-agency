@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { ExternalLink, Heart } from "lucide-react";
+import { useCurrency } from "@/lib/contexts/CurrencyContext";
 
 export function StickyMobileBar({ price, affiliateLink }) {
+  const { formatPrice } = useCurrency();
   const [isVisible, setIsVisible] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -40,7 +42,7 @@ export function StickyMobileBar({ price, affiliateLink }) {
             <div className="flex items-baseline gap-2">
               <span className="text-sm text-gray-600">from</span>
               <span className="text-xl font-bold sm:text-2xl">
-                ${price}
+                {formatPrice(price)}
               </span>
               <span className="text-sm text-gray-600">per person</span>
             </div>
