@@ -34,8 +34,14 @@ export default async function ExperiencesPage({ searchParams }) {
             : "Nordic Experiences & Tours"}
         </h1>
 
+        {/* Mobile Filter Button */}
+        <div className="mb-4 lg:hidden">
+          <ExperienceFilters currentFilters={filters} />
+        </div>
+
         <div className="flex gap-6">
-          <aside className="w-64 flex-shrink-0">
+          {/* Desktop Sidebar */}
+          <aside className="hidden w-64 flex-shrink-0 lg:block">
             <ExperienceFilters currentFilters={filters} />
           </aside>
 
