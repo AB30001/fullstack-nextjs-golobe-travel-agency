@@ -6,6 +6,7 @@ import NextTopLoader from "nextjs-toploader";
 import { Toaster } from "@/components/ui/sonner";
 import { StoreProvider } from "@/app/StoreProvider";
 import { SessionProvider } from "next-auth/react";
+import { CurrencyProvider } from "@/lib/contexts/CurrencyContext";
 import mongoose from "mongoose";
 
 import openGraph from "./opengraph-image.jpg";
@@ -100,10 +101,12 @@ export default async function RootLayout({ children }) {
         ) : (
           <StoreProvider>
             <SessionProvider>
-              <div className="mx-auto max-w-[1440px]">
-                <MaintenanceNotice maintenanceMode={maintenanceMode} />
-                {children}
-              </div>
+              <CurrencyProvider>
+                <div className="mx-auto max-w-[1440px]">
+                  <MaintenanceNotice maintenanceMode={maintenanceMode} />
+                  {children}
+                </div>
+              </CurrencyProvider>
             </SessionProvider>
           </StoreProvider>
         )}
