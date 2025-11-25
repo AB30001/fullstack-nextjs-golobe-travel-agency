@@ -28,6 +28,7 @@ MongoDB is used as the document-based NoSQL database, storing `Experiences` and 
 - **Review System**: Displays aggregate review ratings and counts from Viator, linking directly to Viator.com for full reviews to drive affiliate traffic.
 - **Nordic Country Focus**: Dedicated landing pages for each Nordic country, showcasing specific highlights and curated experiences.
 - **Image Gallery Overhaul**: Displays all available images from Viator for each tour with an enhanced, accessible, and responsive gallery and lightbox.
+- **Multi-Currency Support**: Automatic currency detection based on user location with manual currency selector. Supports USD, EUR, GBP, NOK, SEK, DKK, and ISK. Exchange rates fetched from API with fallback rates for reliability.
 
 # External Dependencies
 
