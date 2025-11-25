@@ -3,15 +3,26 @@
 import { ExternalLink, Check, Shield } from "lucide-react";
 import { useCurrency } from "@/lib/contexts/CurrencyContext";
 
+function getPricingLabel(experience) {
+  if (experience.pricingType === 'UNIT') {
+    if (experience.maxGroupSize) {
+      return `per group (up to ${experience.maxGroupSize})`;
+    }
+    return 'per group';
+  }
+  return 'per adult';
+}
+
 export function BookingSidebar({ experience }) {
   const { formatPrice } = useCurrency();
+  const pricingLabel = getPricingLabel(experience);
   
   return (
     <div className="sticky top-20 rounded-lg border border-gray-200 bg-white p-6 shadow-lg">
       <div className="mb-4">
         <div className="text-sm text-gray-600">From</div>
         <div className="text-3xl font-bold">{formatPrice(experience.priceFrom)}</div>
-        <div className="text-sm text-gray-600">per adult</div>
+        <div className="text-sm text-gray-600">{pricingLabel}</div>
         <div className="mt-1 text-xs text-gray-400">
           Price may vary. Check partner site for final price.
         </div>

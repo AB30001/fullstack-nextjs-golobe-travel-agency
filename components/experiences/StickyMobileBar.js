@@ -4,8 +4,19 @@ import { useState, useEffect } from "react";
 import { ExternalLink, Heart } from "lucide-react";
 import { useCurrency } from "@/lib/contexts/CurrencyContext";
 
-export function StickyMobileBar({ price, affiliateLink }) {
+function getPricingLabel(pricingType, maxGroupSize) {
+  if (pricingType === 'UNIT') {
+    if (maxGroupSize) {
+      return `per group (up to ${maxGroupSize})`;
+    }
+    return 'per group';
+  }
+  return 'per person';
+}
+
+export function StickyMobileBar({ price, affiliateLink, pricingType, maxGroupSize }) {
   const { formatPrice } = useCurrency();
+  const pricingLabel = getPricingLabel(pricingType, maxGroupSize);
   const [isVisible, setIsVisible] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -44,7 +55,7 @@ export function StickyMobileBar({ price, affiliateLink }) {
               <span className="text-xl font-bold sm:text-2xl">
                 {formatPrice(price)}
               </span>
-              <span className="text-sm text-gray-600">per person</span>
+              <span className="text-sm text-gray-600">{pricingLabel}</span>
             </div>
             <div className="text-xs text-gray-500">
               Price may vary on partner site

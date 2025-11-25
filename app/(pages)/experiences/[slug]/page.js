@@ -15,6 +15,7 @@ import { WhatsIncluded } from "@/components/experiences/WhatsIncluded";
 import { ItinerarySection } from "@/components/experiences/ItinerarySection";
 import { SimilarExperiences } from "@/components/experiences/SimilarExperiences";
 import { ImageGallery } from "@/components/experiences/ImageGallery";
+import { StickyMobileBar } from "@/components/experiences/StickyMobileBar";
 
 export async function generateMetadata({ params }) {
   const experience = await getExperienceBySlug(params.slug);
@@ -193,6 +194,13 @@ export default async function ExperienceDetailPage({ params }) {
           </div>
         </div>
       </div>
+      
+      <StickyMobileBar 
+        price={experience.priceFrom}
+        affiliateLink={experience.affiliateLink}
+        pricingType={experience.pricingType}
+        maxGroupSize={experience.maxGroupSize}
+      />
     </div>
   );
 }
