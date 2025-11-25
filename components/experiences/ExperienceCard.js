@@ -5,6 +5,16 @@ import Link from "next/link";
 import { Star, MapPin, Clock } from "lucide-react";
 import { useCurrency } from "@/lib/contexts/CurrencyContext";
 
+function getPricingLabel(pricingType, maxGroupSize) {
+  if (pricingType === 'UNIT') {
+    if (maxGroupSize) {
+      return `per group`;
+    }
+    return 'per group';
+  }
+  return '';
+}
+
 export function ExperienceCard({ experience }) {
   const { formatPrice } = useCurrency();
   const {
@@ -16,10 +26,14 @@ export function ExperienceCard({ experience }) {
     duration,
     priceRange,
     priceFrom,
+    pricingType,
+    maxGroupSize,
     averageRating,
     totalReviews,
     category,
   } = experience;
+  
+  const pricingLabel = getPricingLabel(pricingType, maxGroupSize);
 
   return (
     <Link href={`/experiences/${slug}`}>
@@ -68,6 +82,9 @@ export function ExperienceCard({ experience }) {
             <div className="text-right">
               <div className="text-xs text-gray-500">From</div>
               <div className="text-lg font-bold">{formatPrice(priceFrom)}</div>
+              {pricingLabel && (
+                <div className="text-xs text-gray-500">{pricingLabel}</div>
+              )}
             </div>
           </div>
         </div>
