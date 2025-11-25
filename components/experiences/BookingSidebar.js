@@ -12,6 +12,9 @@ export function BookingSidebar({ experience }) {
         <div className="text-sm text-gray-600">From</div>
         <div className="text-3xl font-bold">{formatPrice(experience.priceFrom)}</div>
         <div className="text-sm text-gray-600">per adult</div>
+        <div className="mt-1 text-xs text-gray-400">
+          Price may vary. Check partner site for final price.
+        </div>
       </div>
 
       <a

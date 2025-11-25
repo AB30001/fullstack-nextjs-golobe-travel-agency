@@ -46,8 +46,8 @@ export function StickyMobileBar({ price, affiliateLink }) {
               </span>
               <span className="text-sm text-gray-600">per person</span>
             </div>
-            <div className="text-xs text-gray-600 sm:text-sm">
-              Lowest Price Guarantee
+            <div className="text-xs text-gray-500">
+              Price may vary on partner site
             </div>
           </div>
 
