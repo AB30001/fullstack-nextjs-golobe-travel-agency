@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { CurrencySelector } from "@/components/ui/CurrencySelector";
 
 export function NavMinimal() {
   const router = useRouter();
@@ -63,6 +64,9 @@ export function NavMinimal() {
         >
           Whale Safari
         </Link>
+        
+        {/* Currency Selector */}
+        <CurrencySelector />
         
         {/* Country Dropdown */}
         <div className="relative">

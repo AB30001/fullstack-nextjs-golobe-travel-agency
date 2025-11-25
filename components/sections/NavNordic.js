@@ -3,9 +3,10 @@
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
-import { Search, ChevronDown } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { CurrencySelector } from "@/components/ui/CurrencySelector";
 
 export function NavNordic({ className, type = "default", ...props }) {
   const router = useRouter();
@@ -92,6 +93,9 @@ export function NavNordic({ className, type = "default", ...props }) {
         >
           Whale Safari
         </Link>
+        
+        {/* Currency Selector */}
+        <CurrencySelector />
         
         {/* Country Dropdown */}
         <div className="relative">
