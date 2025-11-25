@@ -62,51 +62,85 @@ export function ImageGallery({ images, title }) {
   return (
     <>
       <div className="mb-6">
-        <div className="relative grid grid-cols-4 gap-2 overflow-hidden rounded-lg">
-          {/* Large main image - takes up 2x2 grid */}
+        {/* Mobile Layout - Single image with overlay */}
+        <div className="block md:hidden">
           <div
-            className="relative col-span-2 row-span-2 h-[400px] cursor-pointer overflow-hidden md:h-[500px]"
+            className="relative h-[300px] cursor-pointer overflow-hidden rounded-xl"
             onClick={() => openModal(0)}
           >
             <Image
               src={displayImages[0]}
               alt={title}
               fill
-              className="object-cover transition hover:brightness-90"
-              sizes="50vw"
+              className="object-cover"
+              sizes="100vw"
               priority
             />
-          </div>
-
-          {/* Four smaller images on the right */}
-          {displayImages.slice(1, 5).map((image, idx) => (
-            <div
-              key={idx}
-              className="relative col-span-1 h-[196px] cursor-pointer overflow-hidden md:h-[246px]"
-              onClick={() => openModal(idx + 1)}
-            >
-              <Image
-                src={image}
-                alt={`${title} ${idx + 2}`}
-                fill
-                className="object-cover transition hover:brightness-90"
-                sizes="25vw"
-              />
+            <div className="absolute bottom-4 right-4">
+              <button className="flex items-center gap-2 rounded-lg bg-white px-4 py-2 text-sm font-semibold shadow-lg">
+                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+                See all {totalImages} photos
+              </button>
             </div>
-          ))}
+          </div>
         </div>
 
-        {/* View all photos button */}
-        <div className="mt-4 flex items-center justify-between">
-          <button
-            onClick={() => openModal(0)}
-            className="rounded-lg border border-gray-300 bg-white px-6 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
-          >
-            View all {totalImages} photos
-          </button>
-          <span className="text-sm text-gray-600">
-            {totalImages} high-quality images
-          </span>
+        {/* Desktop Layout - Grid */}
+        <div className="hidden md:block">
+          <div className="relative grid grid-cols-4 gap-2 overflow-hidden rounded-xl">
+            {/* Large main image - takes up 2x2 grid */}
+            <div
+              className="relative col-span-2 row-span-2 h-[500px] cursor-pointer overflow-hidden"
+              onClick={() => openModal(0)}
+            >
+              <Image
+                src={displayImages[0]}
+                alt={title}
+                fill
+                className="object-cover transition hover:brightness-90"
+                sizes="50vw"
+                priority
+              />
+            </div>
+
+            {/* Four smaller images on the right */}
+            {displayImages.slice(1, 5).map((image, idx) => (
+              <div
+                key={idx}
+                className="relative col-span-1 h-[246px] cursor-pointer overflow-hidden"
+                onClick={() => openModal(idx + 1)}
+              >
+                <Image
+                  src={image}
+                  alt={`${title} ${idx + 2}`}
+                  fill
+                  className="object-cover transition hover:brightness-90"
+                  sizes="25vw"
+                />
+                {/* Show "See more" overlay on last image if more than 5 */}
+                {idx === 3 && totalImages > 5 && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-white transition hover:bg-black/50">
+                    <span className="text-lg font-semibold">+{totalImages - 5} more</span>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* View all photos button - desktop */}
+          <div className="mt-4 flex items-center justify-between">
+            <button
+              onClick={() => openModal(0)}
+              className="rounded-lg border border-gray-300 bg-white px-6 py-2 text-sm font-semibold text-black transition hover:bg-gray-50"
+            >
+              View all {totalImages} photos
+            </button>
+            <span className="text-sm text-gray-600">
+              {totalImages} high-quality images
+            </span>
+          </div>
         </div>
       </div>
 
