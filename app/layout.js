@@ -45,6 +45,11 @@ export const metadata = {
     "wildlife safari",
     "nordic adventures",
   ],
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5000"),
   openGraph: {
     title: "Nordic Experiences | Tours & Adventures in Scandinavia",
