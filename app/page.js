@@ -131,6 +131,7 @@ export default async function HomePage() {
                 src="https://images.unsplash.com/photo-1483347756197-71ef80e95f73"
                 alt="Northern Lights"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
@@ -147,6 +148,7 @@ export default async function HomePage() {
                 src="https://images.unsplash.com/photo-1513519245088-0e12902e5a38"
                 alt="Fjord Tours"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
@@ -163,6 +165,7 @@ export default async function HomePage() {
                 src="https://images.unsplash.com/photo-1559827260-dc66d52bef19"
                 alt="Wildlife Safari"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
@@ -179,6 +182,7 @@ export default async function HomePage() {
                 src="https://images.unsplash.com/photo-1527004013197-933c4bb611b3"
                 alt="Cultural Tours"
                 fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
                 className="object-cover transition-transform group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>

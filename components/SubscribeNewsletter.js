@@ -121,7 +121,8 @@ export function SubscribeNewsletter({ isSubscribed }) {
         </div>
         <div className="flex h-full items-end self-end max-md:hidden">
           <Image
-            className="h-auto max-h-full"
+            className="max-h-full"
+            style={{ width: 'auto', height: 'auto' }}
             src={mailbox}
             alt="mailbox"
             width={500}

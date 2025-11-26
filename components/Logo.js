@@ -10,7 +10,8 @@ export function Logo({ className }) {
         alt="NordTravel"
         width={156}
         height={52}
-        className={cn("h-[52px] w-auto", className)}
+        className={cn("h-[52px]", className)}
+        style={{ width: 'auto', height: 'auto' }}
         priority
       />
     </Link>
