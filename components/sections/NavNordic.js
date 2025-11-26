@@ -58,11 +58,12 @@ export function NavNordic({ className, type = "default", ...props }) {
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2">
         <Image
-          src="/images/nordtravel-logo.svg"
-          alt="NordTravel"
+          src="/images/nordexplore-logo.svg"
+          alt="NordExplore"
           width={182}
           height={59}
           className="h-[52px] w-auto"
+          style={{ width: 'auto', height: 'auto' }}
           priority
         />
       </Link>
