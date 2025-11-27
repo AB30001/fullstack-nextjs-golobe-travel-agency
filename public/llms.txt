@@ -1,0 +1,38 @@
+# NordExplore - Nordic Tours & Experiences
+
+> NordExplore is a travel discovery platform featuring curated tours and experiences across Norway, Iceland, Sweden, Finland, and Denmark.
+
+## About
+NordExplore helps travelers discover authentic Nordic adventures including Northern Lights tours, fjord cruises, wildlife safaris, glacier hikes, whale watching, and cultural experiences. We partner with trusted local operators through Viator to offer high-quality, verified experiences.
+
+## What We Offer
+- Northern Lights Tours: Chase the aurora borealis in Norway, Iceland, Finland, and Sweden
+- Fjord Tours: Explore Norway's dramatic fjord landscapes by boat, kayak, or scenic train
+- Wildlife Safaris: Whale watching, polar bear expeditions, puffin tours, and more
+- Winter Sports: Dog sledding, snowmobiling, ice fishing, and skiing adventures
+- Cultural Tours: Viking history, local food experiences, and city explorations
+- Adventure Sports: Glacier hiking, ice climbing, snorkeling between tectonic plates
+
+## Countries
+- Norway: Fjords, Northern Lights, Bergen, Tromso, Lofoten Islands
+- Iceland: Glaciers, volcanoes, hot springs, Golden Circle, Blue Lagoon
+- Sweden: Stockholm archipelago, Swedish Lapland, aurora viewing
+- Finland: Lapland adventures, Santa Claus Village, glass igloos, saunas
+- Denmark: Copenhagen, castles, Viking heritage, coastal beauty
+
+## Key Pages
+- Homepage: /
+- All Experiences: /experiences
+- Northern Lights Tours: /experiences?category=Northern%20Lights
+- Fjord Tours: /experiences?category=Fjord%20Tours
+- Wildlife Safari: /experiences?category=Wildlife%20Safari
+- Norway Tours: /experiences?country=Norway
+- Iceland Tours: /experiences?country=Iceland
+
+## Contact
+For support or partnership inquiries, visit /support
+
+## Technical
+- Sitemap: /sitemap.xml
+- RSS not available
+- API not publicly available
