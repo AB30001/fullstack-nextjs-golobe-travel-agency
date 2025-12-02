@@ -1,6 +1,4 @@
 import { Mail, MapPin, Clock } from "lucide-react";
-import { NavNordic } from "@/components/sections/NavNordic";
-import { Footer } from "@/components/sections/Footer";
 import { ContactForm } from "@/components/ContactForm";
 
 export const metadata = {
@@ -10,10 +8,7 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <>
-      <NavNordic />
-      
-      <main className="mx-auto w-[90%] max-w-7xl py-12">
+    <main className="mx-auto w-[90%] max-w-7xl py-12">
         {/* Hero Section */}
         <div className="mb-12 text-center">
           <h1 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
@@ -108,8 +103,5 @@ export default function ContactPage() {
           </div>
         </div>
       </main>
-
-      <Footer />
-    </>
   );
 }
