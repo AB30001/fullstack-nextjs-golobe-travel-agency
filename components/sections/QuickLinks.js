@@ -69,7 +69,7 @@ export function QuickLinks() {
     Contact: [
       {
         name: "Contact Us",
-        href: "#",
+        href: "/contact",
       },
     ],
   };

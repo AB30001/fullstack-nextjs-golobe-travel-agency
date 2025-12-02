@@ -83,6 +83,12 @@ export default async function sitemap() {
       changeFrequency: "monthly",
       priority: 0.4,
     },
+    {
+      url: `${BASE_URL}/contact`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.6,
+    },
   ];
 
   return [...staticPages, ...countryUrls, ...categoryUrls, ...experienceUrls];
