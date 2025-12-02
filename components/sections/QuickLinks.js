@@ -59,11 +59,11 @@ export function QuickLinks() {
     "About Us": [
       {
         name: "Our Story",
-        href: "#",
+        href: "/about",
       },
       {
         name: "Work with Us",
-        href: "#",
+        href: "/contact",
       },
     ],
     Contact: [
