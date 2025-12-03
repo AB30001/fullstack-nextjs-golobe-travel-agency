@@ -16,7 +16,7 @@ export default function AboutPage() {
           Our Story
         </h1>
         <p className="mx-auto max-w-3xl text-lg text-gray-600">
-          We believe the Nordic region holds some of the world's most breathtaking experiences. 
+          We believe the Nordic region holds some of the world&apos;s most breathtaking experiences. 
           Our mission is to connect travelers with authentic adventures across Scandinavia.
         </p>
       </div>
@@ -41,9 +41,9 @@ export default function AboutPage() {
           </h2>
           <p className="mb-4 text-gray-600">
             NordExplore was founded by a team of passionate Nordic travelers who fell in love with 
-            the region's stunning fjords, magical Northern Lights, and warm-hearted people. 
+            the region&apos;s stunning fjords, magical Northern Lights, and warm-hearted people. 
             We realized that while the Nordic countries offer incredible experiences, 
-            finding and booking them shouldn't be complicated.
+            finding and booking them shouldn&apos;t be complicated.
           </p>
           <p className="text-gray-600">
             Today, we curate the best tours and experiences from trusted local operators, 
@@ -99,8 +99,8 @@ export default function AboutPage() {
           Five Countries, Endless Adventures
         </h2>
         <p className="mx-auto mb-12 max-w-2xl text-center text-gray-600">
-          From Norway's dramatic fjords to Iceland's volcanic landscapes, Sweden's pristine forests 
-          to Finland's magical Lapland, and Denmark's charming coastlines - we cover it all.
+          From Norway&apos;s dramatic fjords to Iceland&apos;s volcanic landscapes, Sweden&apos;s pristine forests 
+          to Finland&apos;s magical Lapland, and Denmark&apos;s charming coastlines - we cover it all.
         </p>
         <div className="grid gap-4 md:grid-cols-5">
           {[
@@ -161,7 +161,7 @@ export default function AboutPage() {
             <div>
               <h3 className="mb-2 font-bold text-gray-900">Verified Reviews</h3>
               <p className="text-gray-600">
-                All experiences feature real reviews from travelers who've been there. 
+                All experiences feature real reviews from travelers who&apos;ve been there. 
                 No fake ratings, just honest feedback.
               </p>
             </div>
@@ -214,7 +214,7 @@ export default function AboutPage() {
           Ready to Explore the Nordics?
         </h2>
         <p className="mx-auto mb-8 max-w-2xl text-secondary/70">
-          Whether you're chasing the Northern Lights, hiking glaciers, or exploring Viking history, 
+          Whether you&apos;re chasing the Northern Lights, hiking glaciers, or exploring Viking history, 
           your Nordic adventure starts here.
         </p>
         <Link

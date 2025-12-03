@@ -1,0 +1,131 @@
+08:14:05.527 Running build in Washington, D.C., USA (East) – iad1
+08:14:05.528 Build machine configuration: 2 cores, 8 GB
+08:14:05.662 Cloning github.com/AB30001/fullstack-nextjs-golobe-travel-agency (Branch: master, Commit: 10205a8)
+08:14:06.906 Cloning completed: 1.243s
+08:14:07.190 Restored build cache from previous deployment (23RtNsVPUwZfQ4A9RzshtdEQVJFV)
+08:14:08.063 Running "vercel build"
+08:14:08.454 Vercel CLI 48.12.0
+08:14:08.811 Installing dependencies...
+08:14:13.140 
+08:14:13.141 up to date in 4s
+08:14:13.142 
+08:14:13.142 217 packages are looking for funding
+08:14:13.143   run `npm fund` for details
+08:14:13.174 Detected Next.js version: 14.2.30
+08:14:13.180 Running "npm run build"
+08:14:13.292 
+08:14:13.293 > golob_travel_agency@0.1.0 build
+08:14:13.293 > next build
+08:14:13.293 
+08:14:13.955 Browserslist: caniuse-lite is outdated. Please run:
+08:14:13.956   npx update-browserslist-db@latest
+08:14:13.957   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+08:14:13.972   ▲ Next.js 14.2.30
+08:14:13.973 
+08:14:14.034    Creating an optimized production build ...
+08:14:24.354  ⚠ Compiled with warnings
+08:14:24.354 
+08:14:24.355 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.355 Attempted import error: 'FlightBooking' is not exported from '@/lib/db/models' (imported as 'FlightBooking').
+08:14:24.355 
+08:14:24.355 Import trace for requested module:
+08:14:24.355 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.355 
+08:14:24.355 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.355 Attempted import error: 'FlightItinerary' is not exported from '@/lib/db/models' (imported as 'FlightItinerary').
+08:14:24.355 
+08:14:24.355 Import trace for requested module:
+08:14:24.355 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.355 
+08:14:24.355 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.355 Attempted import error: 'FlightItinerary' is not exported from '@/lib/db/models' (imported as 'FlightItinerary').
+08:14:24.355 
+08:14:24.355 Import trace for requested module:
+08:14:24.355 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.355 
+08:14:24.355 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.356 Attempted import error: 'FlightSegment' is not exported from '@/lib/db/models' (imported as 'FlightSegment').
+08:14:24.356 
+08:14:24.356 Import trace for requested module:
+08:14:24.356 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.356 
+08:14:24.356 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.356 Attempted import error: 'FlightSeat' is not exported from '@/lib/db/models' (imported as 'FlightSeat').
+08:14:24.356 
+08:14:24.356 Import trace for requested module:
+08:14:24.356 ./app/api/cronjob/cleanup_db/route.js
+08:14:24.356 
+08:14:24.358    Linting and checking validity of types ...
+08:14:26.275 Browserslist: caniuse-lite is outdated. Please run:
+08:14:26.276   npx update-browserslist-db@latest
+08:14:26.276   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+08:14:26.412 Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+08:14:26.413   npx update-browserslist-db@latest
+08:14:26.413   Why you should do it regularly: https://github.com/browserslist/update-db#readme
+08:14:30.612 
+08:14:30.613 Failed to compile.
+08:14:30.619 
+08:14:30.619 ./app/(pages)/about/page.js
+08:14:30.619 19:63  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.619 44:23  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.619 46:45  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.619 102:22  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.619 102:51  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.619 102:81  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.620 103:21  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.620 103:52  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.620 164:72  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.620 217:22  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.620 
+08:14:30.620 ./app/(pages)/contact/page.js
+08:14:30.620 18:55  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.620 82:77  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+08:14:30.620 82:87  Error: `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`.  react/no-unescaped-entities
+08:14:30.620 88:85  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.620 98:68  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.621 
+08:14:30.621 ./components/ContactForm.js
+08:14:30.621 25:15  Warning: 'Promise' is not defined.  no-undef
+08:14:30.621 48:43  Error: `'` can be escaped with `&apos;`, `&lsquo;`, `&#39;`, `&rsquo;`.  react/no-unescaped-entities
+08:14:30.635 
+08:14:30.635 ./components/experiences/ImageGallery.js
+08:14:30.635 35:6  Warning: React Hook useEffect has missing dependencies: 'nextImage' and 'prevImage'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+08:14:30.635 
+08:14:30.635 ./components/helpers/NoSSR.js
+08:14:30.635 8:38  Warning: 'Promise' is not defined.  no-undef
+08:14:30.635 
+08:14:30.635 ./components/pages/settings/sections/ProfileSettings.js
+08:14:30.635 68:6  Warning: React Hook useEffect has missing dependencies: 'userData.address', 'userData.dob', 'userData.emailNotifications', 'userData.firstName', 'userData.lastName', 'userData.phone.dialCode', 'userData.phone.number', and 'userData.smsNotifications'. Either include them or remove the dependency array.  react-hooks/exhaustive-deps
+08:14:30.635 68:7  Warning: React Hook useEffect has a complex expression in the dependency array. Extract it to a separate variable so it can be statically checked.  react-hooks/exhaustive-deps
+08:14:30.636 130:29  Warning: 'Promise' is not defined.  no-undef
+08:14:30.636 
+08:14:30.636 ./components/pages/settings/ui/DeleteAccountPopupForm.js
+08:14:30.636 26:6  Warning: React Hook useEffect has a missing dependency: 'toast'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+08:14:30.636 
+08:14:30.636 ./lib/hooks/useFetch.js
+08:14:30.636 42:6  Warning: React Hook useEffect has a missing dependency: 'init'. Either include it or remove the dependency array.  react-hooks/exhaustive-deps
+08:14:30.636 
+08:14:30.636 ./lib/paymentIntegration/stripe/index.js
+08:14:30.636 19:27  Warning: 'Proxy' is not defined.  no-undef
+08:14:30.636 24:20  Warning: 'Promise' is not defined.  no-undef
+08:14:30.636 
+08:14:30.636 ./lib/services/experiences.js
+08:14:30.636 80:40  Warning: 'Promise' is not defined.  no-undef
+08:14:30.636 
+08:14:30.636 ./lib/services/index.js
+08:14:30.637 38:12  Warning: 'Promise' is not defined.  no-undef
+08:14:30.637 
+08:14:30.637 ./lib/services/viator.js
+08:14:30.637 197:25  Warning: 'Promise' is not defined.  no-undef
+08:14:30.637 213:19  Warning: 'Promise' is not defined.  no-undef
+08:14:30.637 
+08:14:30.637 ./lib/services/viatorTransformer.js
+08:14:30.637 108:25  Warning: 'Set' is not defined.  no-undef
+08:14:30.637 
+08:14:30.637 ./lib/utils.js
+08:14:30.637 57:16  Warning: 'Promise' is not defined.  no-undef
+08:14:30.637 305:7  Warning: 'defaultFlightFormValue' is not defined.  no-undef
+08:14:30.637 344:21  Warning: 'Uint8Array' is not defined.  no-undef
+08:14:30.637 
+08:14:30.637 info  - Need to disable some ESLint rules? Learn more here: https://nextjs.org/docs/basic-features/eslint#disabling-rules
+08:14:30.677 Error: Command "npm run build" exited with 1

@@ -15,7 +15,7 @@ export default function ContactPage() {
             Get in Touch
           </h1>
           <p className="mx-auto max-w-2xl text-lg text-gray-600">
-            Have questions about Nordic adventures? We're here to help you plan your perfect Scandinavian experience.
+            Have questions about Nordic adventures? We&apos;re here to help you plan your perfect Scandinavian experience.
           </p>
         </div>
 
@@ -79,13 +79,13 @@ export default function ContactPage() {
             <div className="rounded-xl bg-gray-50 p-6">
               <h3 className="mb-2 font-semibold text-gray-900">How do I book a tour?</h3>
               <p className="text-gray-600">
-                Browse our experiences, select the tour you like, and click "Book Tour" to be directed to our trusted partner Viator where you can complete your booking securely.
+                Browse our experiences, select the tour you like, and click &quot;Book Tour&quot; to be directed to our trusted partner Viator where you can complete your booking securely.
               </p>
             </div>
             <div className="rounded-xl bg-gray-50 p-6">
               <h3 className="mb-2 font-semibold text-gray-900">Can I cancel my booking?</h3>
               <p className="text-gray-600">
-                Cancellation policies vary by tour operator. Check the specific tour's cancellation policy on Viator before booking, or contact their support for assistance.
+                Cancellation policies vary by tour operator. Check the specific tour&apos;s cancellation policy on Viator before booking, or contact their support for assistance.
               </p>
             </div>
             <div className="rounded-xl bg-gray-50 p-6">
@@ -95,7 +95,7 @@ export default function ContactPage() {
               </p>
             </div>
             <div className="rounded-xl bg-gray-50 p-6">
-              <h3 className="mb-2 font-semibold text-gray-900">What's the best time to see the Northern Lights?</h3>
+              <h3 className="mb-2 font-semibold text-gray-900">What&apos;s the best time to see the Northern Lights?</h3>
               <p className="text-gray-600">
                 The aurora season typically runs from September to March. Peak viewing is usually December to February in Norway, Iceland, Finland, and Sweden.
               </p>
