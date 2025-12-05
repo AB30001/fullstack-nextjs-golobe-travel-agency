@@ -1,6 +1,14 @@
 # Overview
 
-Nordic Experiences is a TripAdvisor-style platform built with Next.js 14, focused on showcasing and facilitating bookings for tours and experiences across Norway, Iceland, Sweden, Finland, and Denmark. The platform aggregates affiliate-based bookings, allowing users to browse, review, and discover Nordic adventures, then click through to partner sites like Viator to complete their reservations. While authentication and payment systems are present in the codebase for future expansion, the current emphasis is on a streamlined browsing and affiliate booking experience.
+Nordic Experiences (NordExplore) is a TripAdvisor-style affiliate platform built with Next.js 14, focused on showcasing tours and experiences across Norway, Iceland, Sweden, Finland, and Denmark. Users browse real tour data from Viator, then click through to complete bookings on Viator.com, earning 6-8% commission through a 30-day cookie attribution window.
+
+# Recent Changes
+
+- **December 2024**: Added password-protected admin panel at `/admin` for managing tours by Viator product code
+- **December 2024**: Implemented automatic filtering to hide unavailable tours (missing images, ratings, or prices) from public pages
+- **December 2024**: Added server-side validation when importing tours to ensure data quality
+- **December 2024**: Fixed MongoDB serialization issues and field name inconsistencies (averageRating/rating, totalReviews/reviewCount)
+- **December 2024**: Updated CSP headers to allow currency detection and exchange rate APIs
 
 # User Preferences
 
