@@ -206,6 +206,73 @@ export default function AdminPage() {
     }
   };
 
+  const handleRefreshAllTours = async () => {
+    if (!confirm(`Refresh all ${pagination.total} tours from Viator? This may take a while.`)) return;
+
+    setActionLoading(true);
+    setActionResult(null);
+
+    try {
+      const res = await fetch("/api/admin/tours", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-password": password,
+        },
+        body: JSON.stringify({ refreshAll: true }),
+      });
+
+      const data = await res.json();
+      setActionResult({
+        type: "refresh",
+        success: data.success,
+        message: data.message,
+        results: data.results,
+      });
+
+      if (data.success) {
+        fetchTours();
+      }
+    } catch (error) {
+      setActionResult({
+        type: "refresh",
+        success: false,
+        message: "Failed to refresh tours",
+      });
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
+  const handleRefreshSingle = async (productCode) => {
+    setActionLoading(true);
+    try {
+      const res = await fetch("/api/admin/tours", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-password": password,
+        },
+        body: JSON.stringify({ productCodes: [productCode] }),
+      });
+
+      const data = await res.json();
+      if (data.success) {
+        setActionResult({
+          type: "refresh",
+          success: true,
+          message: data.message,
+          results: data.results,
+        });
+        fetchTours();
+      }
+    } catch (error) {
+      console.error("Error refreshing tour:", error);
+    } finally {
+      setActionLoading(false);
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
@@ -369,6 +436,18 @@ export default function AdminPage() {
                         {actionResult.results.notFound.map((t) => t.productCode).join(", ")}
                       </div>
                     )}
+                    {actionResult.results.updated?.length > 0 && (
+                      <div className="text-green-700">
+                        <strong>Updated:</strong>{" "}
+                        {actionResult.results.updated.map((t) => `${t.productCode} (${t.rating}★, $${t.price})`).join(", ")}
+                      </div>
+                    )}
+                    {actionResult.results.removed?.length > 0 && (
+                      <div className="text-orange-700">
+                        <strong>Removed (unavailable):</strong>{" "}
+                        {actionResult.results.removed.map((t) => t.productCode).join(", ")}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -382,6 +461,18 @@ export default function AdminPage() {
               All Tours ({pagination.total})
             </h2>
             <div className="flex items-center gap-4">
+              <button
+                onClick={handleRefreshAllTours}
+                disabled={actionLoading || toursLoading}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 text-sm"
+              >
+                {actionLoading ? (
+                  <RefreshCw className="h-4 w-4 animate-spin" />
+                ) : (
+                  <RefreshCw className="h-4 w-4" />
+                )}
+                Refresh All from Viator
+              </button>
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
@@ -399,6 +490,7 @@ export default function AdminPage() {
                 onClick={fetchTours}
                 disabled={toursLoading}
                 className="p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg"
+                title="Reload list"
               >
                 <RefreshCw className={`h-5 w-5 ${toursLoading ? "animate-spin" : ""}`} />
               </button>
@@ -478,14 +570,24 @@ export default function AdminPage() {
                         ${tour.price}
                       </td>
                       <td className="px-4 py-3">
-                        <button
-                          onClick={() => handleDeleteSingle(tour.productCode)}
-                          disabled={actionLoading}
-                          className="p-2 text-red-600 hover:bg-red-50 rounded-lg disabled:opacity-50"
-                          title="Delete tour"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </button>
+                        <div className="flex items-center gap-1">
+                          <button
+                            onClick={() => handleRefreshSingle(tour.productCode)}
+                            disabled={actionLoading}
+                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg disabled:opacity-50"
+                            title="Refresh from Viator"
+                          >
+                            <RefreshCw className="h-4 w-4" />
+                          </button>
+                          <button
+                            onClick={() => handleDeleteSingle(tour.productCode)}
+                            disabled={actionLoading}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg disabled:opacity-50"
+                            title="Delete tour"
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   ))

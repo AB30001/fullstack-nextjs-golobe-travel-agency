@@ -262,6 +262,128 @@ export async function DELETE(request) {
   }
 }
 
+export async function PATCH(request) {
+  if (!verifyAdminAuth(request)) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    await connectToDB();
+    
+    const { productCodes, refreshAll } = await request.json();
+    
+    let toursToRefresh = [];
+    
+    if (refreshAll) {
+      toursToRefresh = await Experience.find({ affiliatePartner: 'Viator' })
+        .select('slug')
+        .lean();
+    } else if (productCodes && Array.isArray(productCodes)) {
+      const cleanCodes = productCodes
+        .map(code => code.trim().toUpperCase())
+        .filter(code => code.length > 0);
+      
+      for (const code of cleanCodes) {
+        const tour = await Experience.findOne({ 
+          slug: { $regex: code, $options: 'i' } 
+        }).select('slug').lean();
+        if (tour) toursToRefresh.push(tour);
+      }
+    }
+    
+    if (toursToRefresh.length === 0) {
+      return NextResponse.json(
+        { success: false, error: 'No tours found to refresh' },
+        { status: 400 }
+      );
+    }
+    
+    const results = {
+      updated: [],
+      failed: [],
+      removed: []
+    };
+    
+    for (const tour of toursToRefresh) {
+      const productCode = tour.slug?.split('-').pop()?.toUpperCase();
+      if (!productCode) {
+        results.failed.push({ productCode: 'unknown', reason: 'Invalid slug format' });
+        continue;
+      }
+      
+      try {
+        const viatorProduct = await viatorService.getProductDetails(productCode);
+        
+        if (!viatorProduct || viatorProduct.status === 'INACTIVE') {
+          await Experience.deleteOne({ slug: tour.slug });
+          results.removed.push({ productCode, reason: 'No longer available on Viator' });
+          continue;
+        }
+        
+        const existingTour = await Experience.findOne({ slug: tour.slug }).lean();
+        
+        viatorProduct._country = existingTour?.country?.toLowerCase() || detectCountry(viatorProduct);
+        viatorProduct._destinationName = existingTour?.city || viatorProduct.destination?.destinationName || 'Unknown';
+        
+        const experience = transformViatorToExperience(viatorProduct);
+        
+        experience.slug = tour.slug;
+        
+        await Experience.updateOne(
+          { slug: tour.slug },
+          { $set: {
+            averageRating: experience.averageRating,
+            totalReviews: experience.totalReviews,
+            priceFrom: experience.priceFrom,
+            pricingType: experience.pricingType,
+            maxGroupSize: experience.maxGroupSize,
+            images: experience.images,
+            coverImage: experience.coverImage,
+            description: experience.description,
+            longDescription: experience.longDescription,
+            highlights: experience.highlights,
+            inclusions: experience.inclusions,
+            exclusions: experience.exclusions,
+            itinerary: experience.itinerary,
+            cancellationPolicy: experience.cancellationPolicy,
+            affiliateLink: experience.affiliateLink,
+            duration: experience.duration
+          }}
+        );
+        
+        results.updated.push({
+          productCode,
+          title: experience.title,
+          rating: experience.averageRating,
+          price: experience.priceFrom
+        });
+        
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
+      } catch (error) {
+        console.error(`Error refreshing product ${productCode}:`, error);
+        results.failed.push({ 
+          productCode, 
+          reason: error.message || 'Failed to fetch from Viator' 
+        });
+      }
+    }
+    
+    return NextResponse.json({
+      success: true,
+      message: `Updated ${results.updated.length} tours, ${results.removed.length} removed, ${results.failed.length} failed`,
+      results
+    });
+    
+  } catch (error) {
+    console.error('Error refreshing tours:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to refresh tours' },
+      { status: 500 }
+    );
+  }
+}
+
 function detectCountry(viatorProduct) {
   const destinationName = viatorProduct.destination?.destinationName?.toLowerCase() || '';
   const title = viatorProduct.title?.toLowerCase() || '';
