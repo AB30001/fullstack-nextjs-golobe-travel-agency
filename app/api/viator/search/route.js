@@ -20,12 +20,29 @@ export async function GET(request) {
     const searchQuery = {
       isActive: true,
       affiliatePartner: 'Viator',
-      $or: [
-        { title: { $regex: searchTerm, $options: 'i' } },
-        { description: { $regex: searchTerm, $options: 'i' } },
-        { category: { $regex: searchTerm, $options: 'i' } },
-        { city: { $regex: searchTerm, $options: 'i' } },
-        { tags: { $in: [new RegExp(searchTerm, 'i')] } }
+      coverImage: { $exists: true, $ne: null, $ne: '' },
+      $and: [
+        {
+          $or: [
+            { averageRating: { $exists: true, $gt: 0 } },
+            { rating: { $exists: true, $gt: 0 } }
+          ]
+        },
+        {
+          $or: [
+            { priceFrom: { $exists: true, $gt: 0 } },
+            { price: { $exists: true, $gt: 0 } }
+          ]
+        },
+        {
+          $or: [
+            { title: { $regex: searchTerm, $options: 'i' } },
+            { description: { $regex: searchTerm, $options: 'i' } },
+            { category: { $regex: searchTerm, $options: 'i' } },
+            { city: { $regex: searchTerm, $options: 'i' } },
+            { tags: { $in: [new RegExp(searchTerm, 'i')] } }
+          ]
+        }
       ]
     };
 

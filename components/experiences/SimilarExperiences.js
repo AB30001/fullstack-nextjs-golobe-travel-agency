@@ -18,10 +18,10 @@ export async function SimilarExperiences({ country, category, currentId }) {
     slug: exp.slug,
     title: exp.title,
     coverImage: exp.coverImage,
-    averageRating: exp.averageRating,
-    totalReviews: exp.totalReviews,
+    averageRating: exp.averageRating ?? exp.rating ?? 0,
+    totalReviews: exp.totalReviews ?? exp.reviewCount ?? 0,
     category: exp.category,
-    priceFrom: exp.priceFrom,
+    priceFrom: exp.priceFrom ?? exp.price ?? 0,
   }));
 
   return (

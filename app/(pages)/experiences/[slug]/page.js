@@ -39,14 +39,19 @@ export default async function ExperienceDetailPage({ params }) {
     return notFound();
   }
 
+  const rating = experience.averageRating ?? experience.rating ?? 0;
+  const totalReviews = experience.totalReviews ?? experience.reviewCount ?? 0;
+  const priceFrom = experience.priceFrom ?? experience.price ?? 0;
+
+  const isTourUnavailable = !experience.coverImage || rating === 0 || priceFrom === 0;
+  if (isTourUnavailable) {
+    return notFound();
+  }
+
   const reviews = await getExperienceReviews(experience._id, { limit: 10 });
   const images = experience.images && experience.images.length > 0 
     ? experience.images 
     : [experience.coverImage];
-
-  const rating = experience.averageRating ?? experience.rating ?? 0;
-  const totalReviews = experience.totalReviews ?? experience.reviewCount ?? 0;
-  const priceFrom = experience.priceFrom ?? experience.price ?? 0;
 
   return (
     <div className="min-h-screen bg-gray-50">
