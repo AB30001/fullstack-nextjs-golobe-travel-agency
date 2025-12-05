@@ -26,13 +26,20 @@ export function ExperienceCard({ experience }) {
     duration,
     priceRange,
     priceFrom,
+    price,
     pricingType,
     maxGroupSize,
     averageRating,
+    rating,
     totalReviews,
+    reviewCount,
     category,
   } = experience;
   
+  const displayRating = averageRating ?? rating ?? 0;
+  const displayReviews = totalReviews ?? reviewCount ?? 0;
+  const displayPrice = priceFrom ?? price ?? 0;
+  const displayImage = coverImage || (experience.images && experience.images[0]) || '/placeholder-experience.jpg';
   const pricingLabel = getPricingLabel(pricingType, maxGroupSize);
 
   return (
@@ -40,7 +47,7 @@ export function ExperienceCard({ experience }) {
       <div className="group overflow-hidden rounded-lg bg-white shadow-md transition-shadow hover:shadow-xl">
         <div className="relative h-48 w-full">
           <Image
-            src={coverImage}
+            src={displayImage}
             alt={title}
             fill
             className="object-cover transition-transform group-hover:scale-105"
@@ -61,11 +68,15 @@ export function ExperienceCard({ experience }) {
           </h3>
 
           <div className="mb-3 flex items-center gap-2 text-sm text-gray-600">
-            <Clock className="h-4 w-4" />
-            <span>
-              {duration.value} {duration.unit}
-            </span>
-            <span className="text-gray-400">•</span>
+            {duration && (
+              <>
+                <Clock className="h-4 w-4" />
+                <span>
+                  {duration.value} {duration.unit}
+                </span>
+                <span className="text-gray-400">•</span>
+              </>
+            )}
             <span className="rounded bg-blue-50 px-2 py-0.5 text-xs text-blue-700">
               {category}
             </span>
@@ -74,14 +85,14 @@ export function ExperienceCard({ experience }) {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-1">
               <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-              <span className="font-semibold">{averageRating.toFixed(1)}</span>
+              <span className="font-semibold">{displayRating.toFixed(1)}</span>
               <span className="text-sm text-gray-600">
-                ({totalReviews} reviews)
+                ({displayReviews} reviews)
               </span>
             </div>
             <div className="text-right">
               <div className="text-xs text-gray-500">From</div>
-              <div className="text-lg font-bold">{formatPrice(priceFrom)}</div>
+              <div className="text-lg font-bold">{formatPrice(displayPrice)}</div>
               {pricingLabel && (
                 <div className="text-xs text-gray-500">{pricingLabel}</div>
               )}

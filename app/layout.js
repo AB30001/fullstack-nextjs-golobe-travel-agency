@@ -135,11 +135,10 @@ export default async function RootLayout({ children }) {
 
   return (
     <html lang="en" className={`${tradegothic.variable} ${monse.variable}`}>
-      <head>
+      <head />
+      <body className={monse.className}>
         <WebsiteJsonLd />
         <OrganizationJsonLd />
-      </head>
-      <body className={monse.className}>
         {maintenanceMode.enabled === true &&
         !alloweRoutesWhileMaintenance.some(
           (path) =>
