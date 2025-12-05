@@ -44,6 +44,10 @@ export default async function ExperienceDetailPage({ params }) {
     ? experience.images 
     : [experience.coverImage];
 
+  const rating = experience.averageRating ?? experience.rating ?? 0;
+  const totalReviews = experience.totalReviews ?? experience.reviewCount ?? 0;
+  const priceFrom = experience.priceFrom ?? experience.price ?? 0;
+
   return (
     <div className="min-h-screen bg-gray-50">
       <div className="mx-auto max-w-7xl px-4 py-6">
@@ -54,8 +58,8 @@ export default async function ExperienceDetailPage({ params }) {
             <h1 className="mb-4 text-3xl font-bold md:text-4xl">{experience.title}</h1>
             <div className="flex flex-wrap items-center gap-4">
               <RatingBadge
-                rating={experience.averageRating}
-                totalReviews={experience.totalReviews}
+                rating={rating}
+                totalReviews={totalReviews}
               />
             </div>
           </div>
@@ -93,15 +97,17 @@ export default async function ExperienceDetailPage({ params }) {
             <div className="mb-8 rounded-lg bg-white p-6 shadow-md">
               <h2 className="mb-4 text-2xl font-bold">Quick info</h2>
               <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
-                <div className="flex items-start gap-3">
-                  <Clock className="mt-1 h-5 w-5 text-gray-600" />
-                  <div>
-                    <div className="font-semibold">Duration</div>
-                    <div className="text-sm text-gray-600">
-                      {experience.duration.value} {experience.duration.unit}
+                {experience.duration && (
+                  <div className="flex items-start gap-3">
+                    <Clock className="mt-1 h-5 w-5 text-gray-600" />
+                    <div>
+                      <div className="font-semibold">Duration</div>
+                      <div className="text-sm text-gray-600">
+                        {experience.duration.value} {experience.duration.unit}
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
                 <div className="flex items-start gap-3">
                   <Users className="mt-1 h-5 w-5 text-gray-600" />
                   <div>
@@ -154,14 +160,14 @@ export default async function ExperienceDetailPage({ params }) {
             <div id="reviews" className="mb-8 rounded-lg bg-white p-6 shadow-md">
               <h2 className="mb-4 text-2xl font-bold">Reviews</h2>
               <div className="mb-6 flex items-center gap-4">
-                <div className="text-5xl font-bold">{experience.averageRating.toFixed(1)}</div>
+                <div className="text-5xl font-bold">{rating.toFixed(1)}</div>
                 <div>
                   <div className="flex items-center gap-1">
                     {[...Array(5)].map((_, idx) => (
                       <Star
                         key={idx}
                         className={`h-5 w-5 ${
-                          idx < Math.round(experience.averageRating)
+                          idx < Math.round(rating)
                             ? "fill-black text-black"
                             : "fill-gray-300 text-gray-300"
                         }`}
@@ -169,15 +175,15 @@ export default async function ExperienceDetailPage({ params }) {
                     ))}
                   </div>
                   <div className="text-sm text-gray-600">
-                    {experience.totalReviews.toLocaleString()} reviews
+                    {totalReviews.toLocaleString()} reviews
                   </div>
                 </div>
               </div>
               <ReviewsList 
                 reviews={reviews} 
                 experienceId={experience._id}
-                totalReviews={experience.totalReviews}
-                rating={experience.averageRating.toFixed(1)}
+                totalReviews={totalReviews}
+                rating={rating.toFixed(1)}
                 affiliateLink={experience.affiliateLink}
               />
             </div>
@@ -196,7 +202,7 @@ export default async function ExperienceDetailPage({ params }) {
       </div>
       
       <StickyMobileBar 
-        price={experience.priceFrom}
+        price={priceFrom}
         affiliateLink={experience.affiliateLink}
         pricingType={experience.pricingType}
         maxGroupSize={experience.maxGroupSize}
