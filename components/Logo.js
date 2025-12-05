@@ -8,9 +8,9 @@ export function Logo({ className }) {
       <Image
         src="/images/nordexplore-logo.svg"
         alt="NordExplore"
-        width={156}
-        height={52}
-        className={cn("h-[52px]", className)}
+        width={133}
+        height={44}
+        className={cn("h-[44px]", className)}
         style={{ width: 'auto', height: 'auto' }}
         priority
       />
