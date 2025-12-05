@@ -7,6 +7,10 @@ import { useCurrency } from "@/lib/contexts/CurrencyContext";
 
 export function SimilarExperienceCard({ experience }) {
   const { formatPrice } = useCurrency();
+  
+  const rating = experience.averageRating ?? experience.rating ?? 0;
+  const totalReviews = experience.totalReviews ?? experience.reviewCount ?? 0;
+  const priceFrom = experience.priceFrom ?? experience.price ?? 0;
 
   return (
     <Link
@@ -26,13 +30,13 @@ export function SimilarExperienceCard({ experience }) {
         <h3 className="mb-2 font-semibold text-gray-900 line-clamp-2">{experience.title}</h3>
         <div className="mb-2 flex items-center gap-1">
           <Star className="h-4 w-4 fill-black text-black" />
-          <span className="font-semibold">{experience.averageRating.toFixed(1)}</span>
-          <span className="text-sm text-gray-600">({experience.totalReviews})</span>
+          <span className="font-semibold">{rating.toFixed(1)}</span>
+          <span className="text-sm text-gray-600">({totalReviews})</span>
         </div>
         <div className="text-sm text-gray-600">{experience.category}</div>
         <div className="mt-2">
           <span className="text-sm text-gray-600">from </span>
-          <span className="font-semibold text-gray-900">{formatPrice(experience.priceFrom)}</span>
+          <span className="font-semibold text-gray-900">{formatPrice(priceFrom)}</span>
           <span className="text-sm text-gray-600"> per adult</span>
         </div>
       </div>
