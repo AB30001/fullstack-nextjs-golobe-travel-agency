@@ -5,6 +5,8 @@ export async function GET(request) {
   try {
     const { searchParams } = new URL(request.url);
     const productCode = searchParams.get('productCode');
+    const date = searchParams.get('date');
+    const travelers = searchParams.get('travelers');
 
     if (!productCode) {
       return NextResponse.json(
@@ -13,13 +15,14 @@ export async function GET(request) {
       );
     }
 
-    const availability = await viatorService.getAvailabilitySchedule(productCode);
+    const availability = await viatorService.getAvailabilitySchedule(productCode, date, travelers);
 
     return NextResponse.json({ success: true, availability });
   } catch (error) {
     console.error('Error fetching availability:', error);
     return NextResponse.json(
       { 
+        success: false,
         error: 'Failed to fetch availability',
         message: error.message 
       },

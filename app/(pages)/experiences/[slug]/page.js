@@ -200,6 +200,7 @@ export default async function ExperienceDetailPage({ params }) {
         affiliateLink={experience.affiliateLink}
         pricingType={experience.pricingType}
         maxGroupSize={experience.maxGroupSize}
+        productCode={experience.productCode}
       />
     </div>
   );
