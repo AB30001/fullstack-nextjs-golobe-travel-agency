@@ -29,6 +29,12 @@ MongoDB is used as the document-based NoSQL database, storing `Experiences` and 
 - **Nordic Country Focus**: Dedicated landing pages for each Nordic country, showcasing specific highlights and curated experiences.
 - **Image Gallery Overhaul**: Displays all available images from Viator for each tour with an enhanced, accessible, and responsive gallery and lightbox.
 - **Multi-Currency Support**: Automatic currency detection based on user location with manual currency selector. Supports USD, EUR, GBP, NOK, SEK, DKK, and ISK. Exchange rates fetched from API with fallback rates for reliability.
+- **Admin Tour Management**: Password-protected admin panel at `/admin` for adding and removing tours by Viator product code. Features include:
+  - Add tours by entering Viator product codes (e.g., 424330P3, 399370P3)
+  - Delete tours individually or in bulk by product code
+  - Search and browse all tours in the database
+  - Server-side validation ensures only tours with valid images, ratings, and prices are imported
+  - Automatic filtering hides unavailable tours from public pages
 
 # External Dependencies
 
