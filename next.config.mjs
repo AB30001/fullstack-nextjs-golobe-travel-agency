@@ -1,11 +1,11 @@
 import { join, resolve } from "path";
 const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com https://va.vercel-scripts.com;
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://images.unsplash.com/ https://images.pexels.com/ https://platform-lookaside.fbsbx.com/;
+    img-src 'self' blob: data: https://images.unsplash.com/ https://images.pexels.com/ https://platform-lookaside.fbsbx.com/ https://media-cdn.tripadvisor.com/;
     font-src 'self';
-    connect-src 'self';
+    connect-src 'self' https://ipapi.co https://api.exchangerate-api.com;
     object-src 'self';
     frame-src 'self' https://www.openstreetmap.org/ https://js.stripe.com;
     base-uri 'self';

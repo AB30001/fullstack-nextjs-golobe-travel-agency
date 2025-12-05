@@ -147,6 +147,30 @@ export async function POST(request) {
         
         const experience = transformViatorToExperience(viatorProduct);
         
+        if (!experience.coverImage || experience.coverImage === '/images/default-experience.jpg') {
+          results.failed.push({ 
+            productCode, 
+            reason: 'Tour has no valid images' 
+          });
+          continue;
+        }
+        
+        if (!experience.averageRating || experience.averageRating === 0) {
+          results.failed.push({ 
+            productCode, 
+            reason: 'Tour has no ratings yet' 
+          });
+          continue;
+        }
+        
+        if (!experience.priceFrom || experience.priceFrom === 0) {
+          results.failed.push({ 
+            productCode, 
+            reason: 'Tour has no valid price' 
+          });
+          continue;
+        }
+        
         await Experience.create(experience);
         
         results.added.push({
