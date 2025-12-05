@@ -15,28 +15,9 @@ function getPricingLabel(pricingType, maxGroupSize) {
   return 'per person';
 }
 
-function generateViatorCheckoutLink(affiliateLink, date, travelers) {
+function generateViatorCheckoutLink(affiliateLink) {
   if (!affiliateLink) return '#';
-  
-  const baseUrl = affiliateLink;
-  const params = new URLSearchParams();
-  
-  if (date) {
-    params.append('date', format(date, 'yyyy-MM-dd'));
-  }
-  
-  if (travelers.adults > 0) {
-    params.append('adults', travelers.adults.toString());
-  }
-  if (travelers.children > 0) {
-    params.append('children', travelers.children.toString());
-  }
-  if (travelers.infants > 0) {
-    params.append('infants', travelers.infants.toString());
-  }
-  
-  const separator = baseUrl.includes('?') ? '&' : '?';
-  return `${baseUrl}${separator}${params.toString()}`;
+  return affiliateLink;
 }
 
 function MobileDatePicker({ selectedDate, onDateChange, minDate, onClose }) {
@@ -265,7 +246,7 @@ export function StickyMobileBar({ price, affiliateLink, pricingType, maxGroupSiz
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
   const [availabilityError, setAvailabilityError] = useState(null);
   
-  const checkoutLink = generateViatorCheckoutLink(affiliateLink, selectedDate, travelers);
+  const checkoutLink = generateViatorCheckoutLink(affiliateLink);
   const totalTravelers = travelers.adults + travelers.children + travelers.infants;
 
   const checkAvailability = useCallback(async () => {
@@ -411,9 +392,7 @@ export function StickyMobileBar({ price, affiliateLink, pricingType, maxGroupSiz
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 rounded-lg bg-emerald-600 px-4 py-3 font-semibold text-white transition-colors hover:bg-emerald-700"
               >
-                <span className="whitespace-nowrap text-sm">
-                  {selectedDate ? 'Book Now' : 'Check Dates'}
-                </span>
+                <span className="whitespace-nowrap text-sm">Book on Viator</span>
                 <ExternalLink className="h-4 w-4" />
               </a>
             </div>

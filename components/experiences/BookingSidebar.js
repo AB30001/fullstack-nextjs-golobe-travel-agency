@@ -15,31 +15,9 @@ function getPricingLabel(experience) {
   return 'per adult';
 }
 
-function generateViatorCheckoutLink(affiliateLink, date, travelers) {
+function generateViatorCheckoutLink(affiliateLink) {
   if (!affiliateLink) return '#';
-  
-  const baseUrl = affiliateLink.includes('?') 
-    ? affiliateLink 
-    : affiliateLink;
-  
-  const params = new URLSearchParams();
-  
-  if (date) {
-    params.append('date', format(date, 'yyyy-MM-dd'));
-  }
-  
-  if (travelers.adults > 0) {
-    params.append('adults', travelers.adults.toString());
-  }
-  if (travelers.children > 0) {
-    params.append('children', travelers.children.toString());
-  }
-  if (travelers.infants > 0) {
-    params.append('infants', travelers.infants.toString());
-  }
-  
-  const separator = baseUrl.includes('?') ? '&' : '?';
-  return `${baseUrl}${separator}${params.toString()}`;
+  return affiliateLink;
 }
 
 function DatePicker({ selectedDate, onDateChange, minDate }) {
@@ -292,11 +270,7 @@ export function BookingSidebar({ experience }) {
   const [isCheckingAvailability, setIsCheckingAvailability] = useState(false);
   const [availabilityError, setAvailabilityError] = useState(null);
   
-  const checkoutLink = generateViatorCheckoutLink(
-    experience.affiliateLink, 
-    selectedDate, 
-    travelers
-  );
+  const checkoutLink = generateViatorCheckoutLink(experience.affiliateLink);
   
   const checkAvailability = useCallback(async () => {
     if (!selectedDate || !experience.productCode) return;
@@ -415,12 +389,18 @@ export function BookingSidebar({ experience }) {
         onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#155a5c'}
         onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#186b6d'}
       >
-        {selectedDate ? 'Check Availability & Book' : 'Select Date to Book'}
+        Book on Viator
         <ExternalLink className="h-4 w-4" />
       </a>
       
-      <div className="mb-1 text-center text-xs text-gray-500">
-        You&apos;ll complete booking on Viator.com
+      <div className="mb-4 rounded-lg bg-blue-50 p-3 text-center">
+        <div className="text-xs text-blue-700">
+          {selectedDate ? (
+            <>Select <strong>{format(selectedDate, 'MMM d, yyyy')}</strong> on Viator to complete your booking</>
+          ) : (
+            <>You&apos;ll select your date and travelers on Viator</>
+          )}
+        </div>
       </div>
 
       <div className="mb-4 space-y-2">
