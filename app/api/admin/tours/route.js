@@ -1,0 +1,270 @@
+import { NextResponse } from 'next/server';
+import { connectToDB } from '@/lib/db/utilsDB';
+import { Experience } from '@/lib/db/models';
+import { viatorService } from '@/lib/services/viator';
+import { transformViatorToExperience } from '@/lib/services/viatorTransformer';
+
+function verifyAdminAuth(request) {
+  const authHeader = request.headers.get('x-admin-password');
+  const adminPassword = process.env.ADMIN_PASSWORD;
+  
+  if (!adminPassword || authHeader !== adminPassword) {
+    return false;
+  }
+  return true;
+}
+
+export async function GET(request) {
+  if (!verifyAdminAuth(request)) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    await connectToDB();
+    
+    const { searchParams } = new URL(request.url);
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '50');
+    const search = searchParams.get('search') || '';
+    
+    const skip = (page - 1) * limit;
+    
+    let query = { affiliatePartner: 'Viator' };
+    if (search) {
+      query.$or = [
+        { title: { $regex: search, $options: 'i' } },
+        { slug: { $regex: search, $options: 'i' } }
+      ];
+    }
+    
+    const [tours, total] = await Promise.all([
+      Experience.find(query)
+        .select('title slug country city category averageRating totalReviews priceFrom coverImage isActive createdAt')
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .lean(),
+      Experience.countDocuments(query)
+    ]);
+    
+    const serializedTours = tours.map(tour => ({
+      _id: tour._id.toString(),
+      title: tour.title,
+      slug: tour.slug,
+      country: tour.country,
+      city: tour.city,
+      category: tour.category,
+      rating: tour.averageRating ?? tour.rating ?? 0,
+      reviews: tour.totalReviews ?? tour.reviewCount ?? 0,
+      price: tour.priceFrom ?? tour.price ?? 0,
+      coverImage: tour.coverImage,
+      isActive: tour.isActive,
+      productCode: tour.slug?.split('-').pop()?.toUpperCase() || ''
+    }));
+    
+    return NextResponse.json({
+      success: true,
+      tours: serializedTours,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit)
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching tours:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to fetch tours' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request) {
+  if (!verifyAdminAuth(request)) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    await connectToDB();
+    
+    const { productCodes } = await request.json();
+    
+    if (!productCodes || !Array.isArray(productCodes) || productCodes.length === 0) {
+      return NextResponse.json(
+        { success: false, error: 'Product codes array is required' },
+        { status: 400 }
+      );
+    }
+    
+    const cleanCodes = productCodes
+      .map(code => code.trim().toUpperCase())
+      .filter(code => code.length > 0);
+    
+    if (cleanCodes.length === 0) {
+      return NextResponse.json(
+        { success: false, error: 'No valid product codes provided' },
+        { status: 400 }
+      );
+    }
+    
+    const results = {
+      added: [],
+      failed: [],
+      skipped: []
+    };
+    
+    for (const productCode of cleanCodes) {
+      try {
+        const existingSlug = await Experience.findOne({ 
+          slug: { $regex: productCode, $options: 'i' } 
+        });
+        
+        if (existingSlug) {
+          results.skipped.push({ 
+            productCode, 
+            reason: 'Tour already exists in database' 
+          });
+          continue;
+        }
+        
+        const viatorProduct = await viatorService.getProductDetails(productCode);
+        
+        if (!viatorProduct || viatorProduct.status === 'INACTIVE') {
+          results.failed.push({ 
+            productCode, 
+            reason: 'Product not found or inactive on Viator' 
+          });
+          continue;
+        }
+        
+        const countryFromProduct = detectCountry(viatorProduct);
+        const cityFromProduct = viatorProduct.destination?.destinationName || 'Unknown';
+        
+        viatorProduct._country = countryFromProduct;
+        viatorProduct._destinationName = cityFromProduct;
+        
+        const experience = transformViatorToExperience(viatorProduct);
+        
+        await Experience.create(experience);
+        
+        results.added.push({
+          productCode,
+          title: experience.title,
+          slug: experience.slug
+        });
+        
+        await new Promise(resolve => setTimeout(resolve, 200));
+        
+      } catch (error) {
+        console.error(`Error adding product ${productCode}:`, error);
+        results.failed.push({ 
+          productCode, 
+          reason: error.message || 'Failed to fetch from Viator' 
+        });
+      }
+    }
+    
+    return NextResponse.json({
+      success: true,
+      message: `Added ${results.added.length} tours, ${results.skipped.length} skipped, ${results.failed.length} failed`,
+      results
+    });
+    
+  } catch (error) {
+    console.error('Error adding tours:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to add tours' },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(request) {
+  if (!verifyAdminAuth(request)) {
+    return NextResponse.json({ success: false, error: 'Unauthorized' }, { status: 401 });
+  }
+
+  try {
+    await connectToDB();
+    
+    const { productCodes } = await request.json();
+    
+    if (!productCodes || !Array.isArray(productCodes) || productCodes.length === 0) {
+      return NextResponse.json(
+        { success: false, error: 'Product codes array is required' },
+        { status: 400 }
+      );
+    }
+    
+    const cleanCodes = productCodes
+      .map(code => code.trim().toUpperCase())
+      .filter(code => code.length > 0);
+    
+    const results = {
+      deleted: [],
+      notFound: []
+    };
+    
+    for (const productCode of cleanCodes) {
+      const result = await Experience.findOneAndDelete({ 
+        slug: { $regex: productCode, $options: 'i' } 
+      });
+      
+      if (result) {
+        results.deleted.push({
+          productCode,
+          title: result.title,
+          slug: result.slug
+        });
+      } else {
+        results.notFound.push({ productCode });
+      }
+    }
+    
+    return NextResponse.json({
+      success: true,
+      message: `Deleted ${results.deleted.length} tours, ${results.notFound.length} not found`,
+      results
+    });
+    
+  } catch (error) {
+    console.error('Error deleting tours:', error);
+    return NextResponse.json(
+      { success: false, error: 'Failed to delete tours' },
+      { status: 500 }
+    );
+  }
+}
+
+function detectCountry(viatorProduct) {
+  const destinationName = viatorProduct.destination?.destinationName?.toLowerCase() || '';
+  const title = viatorProduct.title?.toLowerCase() || '';
+  const description = viatorProduct.description?.toLowerCase() || '';
+  
+  const text = `${destinationName} ${title} ${description}`;
+  
+  if (text.includes('norway') || text.includes('oslo') || text.includes('bergen') || 
+      text.includes('tromsø') || text.includes('tromso') || text.includes('trondheim') ||
+      text.includes('norwegian') || text.includes('fjord')) {
+    return 'norway';
+  }
+  if (text.includes('iceland') || text.includes('reykjavik') || text.includes('akureyri') ||
+      text.includes('icelandic')) {
+    return 'iceland';
+  }
+  if (text.includes('sweden') || text.includes('stockholm') || text.includes('gothenburg') ||
+      text.includes('swedish')) {
+    return 'sweden';
+  }
+  if (text.includes('finland') || text.includes('helsinki') || text.includes('rovaniemi') ||
+      text.includes('finnish') || text.includes('lapland')) {
+    return 'finland';
+  }
+  if (text.includes('denmark') || text.includes('copenhagen') || text.includes('danish')) {
+    return 'denmark';
+  }
+  
+  return 'norway';
+}
