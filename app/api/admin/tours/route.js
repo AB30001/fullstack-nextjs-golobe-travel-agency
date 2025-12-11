@@ -152,6 +152,19 @@ export async function POST(request) {
         viatorProduct._country = countryFromProduct;
         viatorProduct._destinationName = cityFromProduct;
         
+        // Fetch pricing from availability schedules (product details doesn't include pricing)
+        let pricingFromSchedule = null;
+        try {
+          pricingFromSchedule = await viatorService.getProductPricing(productCode);
+          console.log(`Product ${productCode} pricing from schedule:`, pricingFromSchedule);
+        } catch (pricingError) {
+          console.log(`Could not fetch pricing for ${productCode}:`, pricingError.message);
+        }
+        
+        if (pricingFromSchedule && pricingFromSchedule > 0) {
+          viatorProduct.fromPrice = pricingFromSchedule;
+        }
+        
         const experience = transformViatorToExperience(viatorProduct);
         
         if (!experience.coverImage || experience.coverImage === '/images/default-experience.jpg') {
