@@ -20,6 +20,7 @@ export default function AdminPage() {
   const [productCodesToDelete, setProductCodesToDelete] = useState("");
   const [actionLoading, setActionLoading] = useState(false);
   const [actionResult, setActionResult] = useState(null);
+  const [refreshProgress, setRefreshProgress] = useState({ current: 0, total: 0, inProgress: false });
 
   useEffect(() => {
     const savedAuth = sessionStorage.getItem("adminAuth");
@@ -211,37 +212,89 @@ export default function AdminPage() {
   };
 
   const handleRefreshAllTours = async () => {
-    if (!confirm(`Refresh all ${pagination.total} tours from Viator? This may take a while.`)) return;
+    if (!confirm(`Refresh all ${pagination.total} tours from Viator? This will take several minutes.`)) return;
 
     setActionLoading(true);
     setActionResult(null);
-
+    
+    // First, get all tour product codes
+    const allTours = [];
+    let page = 1;
+    let hasMore = true;
+    
     try {
-      const res = await fetch("/api/admin/tours", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          "x-admin-password": password,
-        },
-        body: JSON.stringify({ refreshAll: true }),
-      });
-
-      const data = await res.json();
+      // Fetch all tour codes first
+      while (hasMore) {
+        const params = new URLSearchParams({
+          page: page.toString(),
+          limit: "100",
+          search: "",
+          sortBy: "createdAt",
+          sortOrder: "desc",
+        });
+        
+        const res = await fetch(`/api/admin/tours?${params}`, {
+          headers: { "x-admin-password": password },
+        });
+        
+        const data = await res.json();
+        if (data.success && data.tours.length > 0) {
+          allTours.push(...data.tours.map(t => t.productCode));
+          page++;
+          hasMore = data.tours.length === 100;
+        } else {
+          hasMore = false;
+        }
+      }
+      
+      const total = allTours.length;
+      setRefreshProgress({ current: 0, total, inProgress: true });
+      
+      const results = {
+        updated: [],
+        failed: [],
+        removed: []
+      };
+      
+      // Refresh tours in batches of 5
+      const batchSize = 5;
+      for (let i = 0; i < allTours.length; i += batchSize) {
+        const batch = allTours.slice(i, i + batchSize);
+        
+        const res = await fetch("/api/admin/tours", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            "x-admin-password": password,
+          },
+          body: JSON.stringify({ productCodes: batch }),
+        });
+        
+        const data = await res.json();
+        if (data.results) {
+          if (data.results.updated) results.updated.push(...data.results.updated);
+          if (data.results.failed) results.failed.push(...data.results.failed);
+          if (data.results.removed) results.removed.push(...data.results.removed);
+        }
+        
+        setRefreshProgress({ current: Math.min(i + batchSize, total), total, inProgress: true });
+      }
+      
+      setRefreshProgress({ current: total, total, inProgress: false });
       setActionResult({
         type: "refresh",
-        success: data.success,
-        message: data.message,
-        results: data.results,
+        success: true,
+        message: `Updated ${results.updated.length} tours, ${results.removed.length} removed, ${results.failed.length} failed`,
+        results,
       });
-
-      if (data.success) {
-        fetchTours();
-      }
+      
+      fetchTours();
     } catch (error) {
+      setRefreshProgress({ current: 0, total: 0, inProgress: false });
       setActionResult({
         type: "refresh",
         success: false,
-        message: "Failed to refresh tours",
+        message: "Failed to refresh tours: " + error.message,
       });
     } finally {
       setActionLoading(false);
@@ -389,6 +442,26 @@ export default function AdminPage() {
             </button>
           </div>
         </div>
+
+        {refreshProgress.inProgress && (
+          <div className="mb-8 p-4 rounded-lg bg-blue-50 border border-blue-200">
+            <div className="flex items-center gap-3 mb-2">
+              <RefreshCw className="h-5 w-5 text-blue-600 animate-spin" />
+              <span className="font-medium text-blue-800">
+                Refreshing tours from Viator...
+              </span>
+            </div>
+            <div className="w-full bg-blue-200 rounded-full h-3">
+              <div 
+                className="bg-blue-600 h-3 rounded-full transition-all duration-300"
+                style={{ width: `${refreshProgress.total > 0 ? (refreshProgress.current / refreshProgress.total) * 100 : 0}%` }}
+              />
+            </div>
+            <div className="mt-2 text-sm text-blue-700">
+              {refreshProgress.current} of {refreshProgress.total} tours processed
+            </div>
+          </div>
+        )}
 
         {actionResult && (
           <div
