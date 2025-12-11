@@ -26,6 +26,8 @@ export async function GET(request) {
     const page = parseInt(searchParams.get('page') || '1');
     const limit = parseInt(searchParams.get('limit') || '50');
     const search = searchParams.get('search') || '';
+    const sortBy = searchParams.get('sortBy') || 'createdAt';
+    const sortOrder = searchParams.get('sortOrder') || 'desc';
     
     const skip = (page - 1) * limit;
     
@@ -37,10 +39,15 @@ export async function GET(request) {
       ];
     }
     
+    // Build sort object
+    const sortOptions = {};
+    const sortField = sortBy === 'price' ? 'priceFrom' : (sortBy === 'rating' ? 'averageRating' : 'createdAt');
+    sortOptions[sortField] = sortOrder === 'asc' ? 1 : -1;
+    
     const [tours, total] = await Promise.all([
       Experience.find(query)
         .select('title slug country city category averageRating totalReviews priceFrom coverImage isActive createdAt')
-        .sort({ createdAt: -1 })
+        .sort(sortOptions)
         .skip(skip)
         .limit(limit)
         .lean(),
@@ -322,19 +329,37 @@ export async function PATCH(request) {
         
         const existingTour = await Experience.findOne({ slug: tour.slug }).lean();
         
+        // Try to get pricing from availability schedules (more reliable)
+        let pricingFromSchedule = null;
+        try {
+          pricingFromSchedule = await viatorService.getProductPricing(productCode);
+        } catch (pricingError) {
+          console.log(`Could not fetch pricing for ${productCode}:`, pricingError.message);
+        }
+        
         viatorProduct._country = existingTour?.country?.toLowerCase() || detectCountry(viatorProduct);
         viatorProduct._destinationName = existingTour?.city || viatorProduct.destination?.destinationName || 'Unknown';
+        
+        // Pass pricing from schedule if available, otherwise pass existing price as fallback
+        if (pricingFromSchedule && pricingFromSchedule > 0) {
+          viatorProduct.fromPrice = pricingFromSchedule;
+        } else if (existingTour?.priceFrom && existingTour.priceFrom > 0) {
+          viatorProduct._existingPrice = existingTour.priceFrom;
+        }
         
         const experience = transformViatorToExperience(viatorProduct);
         
         experience.slug = tour.slug;
+        
+        // Only update price if we got a valid new price, otherwise keep existing
+        const newPrice = experience.priceFrom > 0 ? experience.priceFrom : (existingTour?.priceFrom || 0);
         
         await Experience.updateOne(
           { slug: tour.slug },
           { $set: {
             averageRating: experience.averageRating,
             totalReviews: experience.totalReviews,
-            priceFrom: experience.priceFrom,
+            priceFrom: newPrice,
             pricingType: experience.pricingType,
             maxGroupSize: experience.maxGroupSize,
             images: experience.images,
@@ -355,10 +380,10 @@ export async function PATCH(request) {
           productCode,
           title: experience.title,
           rating: experience.averageRating,
-          price: experience.priceFrom
+          price: newPrice
         });
         
-        await new Promise(resolve => setTimeout(resolve, 200));
+        await new Promise(resolve => setTimeout(resolve, 300));
         
       } catch (error) {
         console.error(`Error refreshing product ${productCode}:`, error);
