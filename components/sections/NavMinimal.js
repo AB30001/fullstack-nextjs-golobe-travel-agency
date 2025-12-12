@@ -65,6 +65,12 @@ export function NavMinimal() {
         >
           Whale Safari
         </Link>
+        <Link
+          href="/blog"
+          className="hidden font-medium text-gray-900 transition-colors hover:text-blue-600 lg:block"
+        >
+          Blog
+        </Link>
         
         {/* Currency Selector */}
         <CurrencySelector />

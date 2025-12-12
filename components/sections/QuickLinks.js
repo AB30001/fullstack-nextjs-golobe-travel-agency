@@ -44,6 +44,10 @@ export function QuickLinks() {
     ],
     "Travel Blogs": [
       {
+        name: "Our Blog",
+        href: "/blog",
+      },
+      {
         name: "Sweden Travel Guide",
         href: "https://www.swedentips.se/",
       },
