@@ -22,6 +22,8 @@ export default function AdminPage() {
   const [actionLoading, setActionLoading] = useState(false);
   const [actionResult, setActionResult] = useState(null);
   const [refreshProgress, setRefreshProgress] = useState({ current: 0, total: 0, inProgress: false });
+  
+  const [selectedTours, setSelectedTours] = useState(new Set());
 
   useEffect(() => {
     const savedAuth = sessionStorage.getItem("adminAuth");
@@ -69,6 +71,64 @@ export default function AdminPage() {
     setPassword("");
     sessionStorage.removeItem("adminAuth");
     setTours([]);
+  };
+
+  const handleSelectTour = (productCode) => {
+    const newSelected = new Set(selectedTours);
+    if (newSelected.has(productCode)) {
+      newSelected.delete(productCode);
+    } else {
+      newSelected.add(productCode);
+    }
+    setSelectedTours(newSelected);
+  };
+
+  const handleSelectAll = () => {
+    if (selectedTours.size === tours.length && tours.length > 0) {
+      setSelectedTours(new Set());
+    } else {
+      setSelectedTours(new Set(tours.map(t => t.productCode)));
+    }
+  };
+
+  const handleDeleteSelected = async () => {
+    if (selectedTours.size === 0) return;
+
+    const message = `Delete ${selectedTours.size} selected tour${selectedTours.size > 1 ? 's' : ''}?`;
+    if (!confirm(message)) return;
+
+    setActionLoading(true);
+    try {
+      const res = await fetch("/api/admin/tours", {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-password": password,
+        },
+        body: JSON.stringify({ productCodes: Array.from(selectedTours) }),
+      });
+
+      const data = await res.json();
+      setActionResult({
+        type: "delete",
+        success: data.success,
+        message: data.message,
+        results: data.results,
+      });
+
+      if (data.success) {
+        setSelectedTours(new Set());
+        fetchTours();
+      }
+    } catch (error) {
+      setActionResult({
+        type: "delete",
+        success: false,
+        message: "Failed to delete tours",
+      });
+    } finally {
+      setActionLoading(false);
+    }
   };
 
   const fetchTours = async () => {
@@ -539,9 +599,26 @@ export default function AdminPage() {
 
         <div className="bg-white rounded-lg shadow">
           <div className="p-4 border-b border-gray-200 flex items-center justify-between gap-4 flex-wrap">
-            <h2 className="text-lg font-semibold">
-              All Tours ({pagination.total})
-            </h2>
+            <div className="flex items-center gap-4">
+              <h2 className="text-lg font-semibold">
+                All Tours ({pagination.total})
+              </h2>
+              {selectedTours.size > 0 && (
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-gray-600">
+                    {selectedTours.size} selected
+                  </span>
+                  <button
+                    onClick={handleDeleteSelected}
+                    disabled={actionLoading}
+                    className="px-3 py-1 text-sm bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-1"
+                  >
+                    <Trash2 className="h-4 w-4" />
+                    Delete Selected
+                  </button>
+                </div>
+              )}
+            </div>
             <div className="flex items-center gap-4 flex-wrap">
               <button
                 onClick={handleRefreshAllTours}
@@ -618,6 +695,15 @@ export default function AdminPage() {
             <table className="w-full">
               <thead className="bg-gray-50">
                 <tr>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase w-12">
+                    <input
+                      type="checkbox"
+                      checked={selectedTours.size === tours.length && tours.length > 0}
+                      onChange={handleSelectAll}
+                      className="w-4 h-4 cursor-pointer"
+                      title="Select all tours on this page"
+                    />
+                  </th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Tour
                   </th>
@@ -641,20 +727,28 @@ export default function AdminPage() {
               <tbody className="divide-y divide-gray-200">
                 {toursLoading ? (
                   <tr>
-                    <td colSpan="6" className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
                       <RefreshCw className="h-6 w-6 animate-spin mx-auto mb-2" />
                       Loading tours...
                     </td>
                   </tr>
                 ) : tours.length === 0 ? (
                   <tr>
-                    <td colSpan="6" className="px-4 py-8 text-center text-gray-500">
+                    <td colSpan="7" className="px-4 py-8 text-center text-gray-500">
                       No tours found
                     </td>
                   </tr>
                 ) : (
                   tours.map((tour) => (
-                    <tr key={tour._id} className="hover:bg-gray-50">
+                    <tr key={tour._id} className={`hover:bg-gray-50 ${selectedTours.has(tour.productCode) ? 'bg-blue-50' : ''}`}>
+                      <td className="px-4 py-3 w-12">
+                        <input
+                          type="checkbox"
+                          checked={selectedTours.has(tour.productCode)}
+                          onChange={() => handleSelectTour(tour.productCode)}
+                          className="w-4 h-4 cursor-pointer"
+                        />
+                      </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
                           {tour.coverImage && (
