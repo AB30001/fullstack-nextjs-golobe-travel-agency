@@ -28,10 +28,16 @@ export async function GET(request) {
     const search = searchParams.get('search') || '';
     const sortBy = searchParams.get('sortBy') || 'createdAt';
     const sortOrder = searchParams.get('sortOrder') || 'desc';
+    const country = searchParams.get('country') || '';
     
     const skip = (page - 1) * limit;
     
     let query = { affiliatePartner: 'Viator' };
+    
+    if (country) {
+      query.country = country;
+    }
+    
     if (search) {
       query.$or = [
         { title: { $regex: search, $options: 'i' } },

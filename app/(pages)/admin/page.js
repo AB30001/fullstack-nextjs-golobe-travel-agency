@@ -15,6 +15,7 @@ export default function AdminPage() {
   const [toursLoading, setToursLoading] = useState(false);
   const [sortBy, setSortBy] = useState("createdAt");
   const [sortOrder, setSortOrder] = useState("desc");
+  const [selectedCountry, setSelectedCountry] = useState("");
   
   const [productCodesToAdd, setProductCodesToAdd] = useState("");
   const [productCodesToDelete, setProductCodesToDelete] = useState("");
@@ -34,7 +35,7 @@ export default function AdminPage() {
     if (isAuthenticated) {
       fetchTours();
     }
-  }, [isAuthenticated, pagination.page, searchQuery, sortBy, sortOrder]);
+  }, [isAuthenticated, pagination.page, searchQuery, sortBy, sortOrder, selectedCountry]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -80,6 +81,10 @@ export default function AdminPage() {
         sortBy: sortBy,
         sortOrder: sortOrder,
       });
+
+      if (selectedCountry) {
+        params.append('country', selectedCountry);
+      }
 
       const res = await fetch(`/api/admin/tours?${params}`, {
         headers: { "x-admin-password": password },
@@ -550,6 +555,21 @@ export default function AdminPage() {
                 )}
                 Refresh All from Viator
               </button>
+              <select
+                value={selectedCountry}
+                onChange={(e) => {
+                  setSelectedCountry(e.target.value);
+                  setPagination((p) => ({ ...p, page: 1 }));
+                }}
+                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm"
+              >
+                <option value="">All Countries</option>
+                <option value="Norway">Norway</option>
+                <option value="Iceland">Iceland</option>
+                <option value="Sweden">Sweden</option>
+                <option value="Finland">Finland</option>
+                <option value="Denmark">Denmark</option>
+              </select>
               <div className="flex items-center gap-2">
                 <ArrowUpDown className="h-4 w-4 text-gray-500" />
                 <select
