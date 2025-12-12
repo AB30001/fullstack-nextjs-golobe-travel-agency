@@ -1,10 +1,10 @@
-import { NavNordic } from "@/components/sections/NavNordic";
+import { NavMinimal } from "@/components/sections/NavMinimal";
 import { Footer } from "@/components/sections/Footer";
 
 export default async function PagesLayout({ children }) {
   return (
     <>
-      <NavNordic type="default" />
+      <NavMinimal />
       {children}
       <Footer />
     </>

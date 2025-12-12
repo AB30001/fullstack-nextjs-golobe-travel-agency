@@ -5,8 +5,6 @@ import { client } from '@/lib/sanity/client';
 import { postBySlugQuery, postsQuery } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
 import { PortableText } from '@portabletext/react';
-import { NavNordic } from '@/components/sections/NavNordic';
-import { Footer } from '@/components/sections/Footer';
 import { Calendar, User, ArrowLeft, Clock } from 'lucide-react';
 
 export const revalidate = 60;
@@ -144,8 +142,6 @@ export default async function BlogPostPage({ params }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavNordic type="default" />
-
       <main className="container mx-auto px-4 py-8">
         <Link
           href="/blog"
@@ -238,8 +234,6 @@ export default async function BlogPostPage({ params }) {
           </footer>
         </article>
       </main>
-
-      <Footer />
     </div>
   );
 }

@@ -3,8 +3,6 @@ import Image from 'next/image';
 import { client } from '@/lib/sanity/client';
 import { postsQuery } from '@/lib/sanity/queries';
 import { urlFor } from '@/lib/sanity/image';
-import { NavNordic } from '@/components/sections/NavNordic';
-import { Footer } from '@/components/sections/Footer';
 import { Calendar, User, ArrowRight } from 'lucide-react';
 
 export const metadata = {
@@ -35,8 +33,6 @@ export default async function BlogPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <NavNordic type="default" />
-      
       <main className="container mx-auto px-4 py-12">
         <div className="mb-12 text-center">
           <h1 className="mb-4 text-4xl font-bold text-gray-900 md:text-5xl">
@@ -135,8 +131,6 @@ export default async function BlogPage() {
           </div>
         )}
       </main>
-
-      <Footer />
     </div>
   );
 }
