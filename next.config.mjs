@@ -1,13 +1,13 @@
 import { join, resolve } from "path";
 const cspHeader = `
     default-src 'self';
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com https://va.vercel-scripts.com;
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://images.unsplash.com/ https://images.pexels.com/ https://platform-lookaside.fbsbx.com/ https://media-cdn.tripadvisor.com/;
-    font-src 'self';
-    connect-src 'self' https://ipapi.co https://api.exchangerate-api.com;
+    script-src 'self' 'unsafe-eval' 'unsafe-inline' https://js.stripe.com https://va.vercel-scripts.com https://*.sanity.io https://*.sanity-cdn.com;
+    style-src 'self' 'unsafe-inline' https://*.sanity.io;
+    img-src 'self' blob: data: https://images.unsplash.com/ https://images.pexels.com/ https://platform-lookaside.fbsbx.com/ https://media-cdn.tripadvisor.com/ https://cdn.sanity.io/ https://*.sanity.io;
+    font-src 'self' https://*.sanity.io data:;
+    connect-src 'self' https://ipapi.co https://api.exchangerate-api.com https://*.sanity.io https://*.api.sanity.io https://*.apicdn.sanity.io;
     object-src 'self';
-    frame-src 'self' https://www.openstreetmap.org/ https://js.stripe.com;
+    frame-src 'self' https://www.openstreetmap.org/ https://js.stripe.com https://*.sanity.io;
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
@@ -75,6 +75,10 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "media-cdn.tripadvisor.com",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
       },
     ],
   },

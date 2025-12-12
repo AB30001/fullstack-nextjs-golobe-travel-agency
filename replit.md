@@ -4,11 +4,17 @@ Nordic Experiences (NordExplore) is a TripAdvisor-style affiliate platform built
 
 # Recent Changes
 
+- **December 2024**: Added Sanity CMS integration for blog functionality:
+  - Embedded Sanity Studio at `/studio` for content management
+  - Blog listing page at `/blog` with article cards
+  - Individual article pages at `/blog/[slug]` with rich text rendering
+  - Blog schemas: post, author, category with SEO fields
+  - Added Blog link to main navigation header
 - **December 2024**: Added password-protected admin panel at `/admin` for managing tours by Viator product code
 - **December 2024**: Implemented automatic filtering to hide unavailable tours (missing images, ratings, or prices) from public pages
 - **December 2024**: Added server-side validation when importing tours to ensure data quality
 - **December 2024**: Fixed MongoDB serialization issues and field name inconsistencies (averageRating/rating, totalReviews/reviewCount)
-- **December 2024**: Updated CSP headers to allow currency detection and exchange rate APIs
+- **December 2024**: Updated CSP headers to allow currency detection, exchange rate APIs, and Sanity CDN
 
 # User Preferences
 
@@ -43,6 +49,12 @@ MongoDB is used as the document-based NoSQL database, storing `Experiences` and 
   - Search and browse all tours in the database
   - Server-side validation ensures only tours with valid images, ratings, and prices are imported
   - Automatic filtering hides unavailable tours from public pages
+- **Blog with Sanity CMS**: Integrated Sanity headless CMS for blog content management:
+  - Embedded Sanity Studio at `/studio` for creating and editing blog posts
+  - Blog listing page at `/blog` with article thumbnails, excerpts, and author info
+  - Individual article pages with rich text rendering (PortableText), images, and SEO optimization
+  - Content schemas: Blog Posts (with SEO fields), Authors, and Categories
+  - Auto-revalidation every 60 seconds for fresh content
 
 # External Dependencies
 
