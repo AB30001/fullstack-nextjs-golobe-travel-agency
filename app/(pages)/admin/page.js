@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Trash2, Plus, Search, LogOut, RefreshCw, AlertCircle, CheckCircle, ArrowUpDown } from "lucide-react";
+import { Trash2, Plus, Search, LogOut, RefreshCw, AlertCircle, CheckCircle, ArrowUpDown, Copy, Check } from "lucide-react";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -24,6 +24,7 @@ export default function AdminPage() {
   const [refreshProgress, setRefreshProgress] = useState({ current: 0, total: 0, inProgress: false });
   
   const [selectedTours, setSelectedTours] = useState(new Set());
+  const [copiedCode, setCopiedCode] = useState(null);
 
   useEffect(() => {
     const savedAuth = sessionStorage.getItem("adminAuth");
@@ -128,6 +129,16 @@ export default function AdminPage() {
       });
     } finally {
       setActionLoading(false);
+    }
+  };
+
+  const handleCopyCode = async (code) => {
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopiedCode(code);
+      setTimeout(() => setCopiedCode(null), 2000);
+    } catch (error) {
+      console.error("Failed to copy:", error);
     }
   };
 
@@ -767,9 +778,18 @@ export default function AdminPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3">
-                        <code className="bg-gray-100 px-2 py-1 rounded text-xs">
-                          {tour.productCode}
-                        </code>
+                        <button
+                          onClick={() => handleCopyCode(tour.productCode)}
+                          className="flex items-center gap-2 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded text-xs transition-colors cursor-pointer"
+                          title="Click to copy"
+                        >
+                          <code>{tour.productCode}</code>
+                          {copiedCode === tour.productCode ? (
+                            <Check className="h-3 w-3 text-green-600" />
+                          ) : (
+                            <Copy className="h-3 w-3 text-gray-600" />
+                          )}
+                        </button>
                       </td>
                       <td className="px-4 py-3 text-sm text-gray-600">
                         {tour.country}
