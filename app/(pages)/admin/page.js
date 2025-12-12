@@ -770,9 +770,15 @@ export default function AdminPage() {
                             />
                           )}
                           <div className="max-w-xs">
-                            <div className="font-medium text-gray-900 truncate">
+                            <a
+                              href={`/experiences/${tour.slug}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="font-medium text-blue-600 hover:text-blue-700 hover:underline truncate block"
+                              title="Open tour in NordExplore"
+                            >
                               {tour.title}
-                            </div>
+                            </a>
                             <div className="text-xs text-gray-500">{tour.category}</div>
                           </div>
                         </div>
